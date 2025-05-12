@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import EducationTimeline from "../components/EducationTimeline";
 import Skills from "../components/Skills";
 import { SCHOOL_LOGOS } from "../utils/types";
+import { fadeInUp, staggerContainer, scaleIn } from "../utils/animation";
 
 const About = () => {
   const education = [
@@ -37,13 +38,16 @@ const About = () => {
   ];
 
   return (
-    <Box sx={{ py: 8, minHeight: "90vh" }}>
+    <Box
+      component={motion.div}
+      variants={staggerContainer}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      sx={{ py: 8, minHeight: "90vh" }}
+    >
       <Container maxWidth="lg">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
+        <motion.div variants={fadeInUp}>
           <Typography
             variant="h2"
             component="h2"
@@ -67,11 +71,7 @@ const About = () => {
         </motion.div>
 
         <Box sx={{ display: "flex", flexDirection: "column", gap: 6 }}>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
+          <motion.div variants={scaleIn}>
             <Paper
               elevation={0}
               sx={{
@@ -99,11 +99,7 @@ const About = () => {
             </Paper>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
+          <motion.div variants={scaleIn}>
             <Paper
               elevation={0}
               sx={{

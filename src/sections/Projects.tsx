@@ -15,6 +15,7 @@ import { motion } from "framer-motion";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import LaunchIcon from "@mui/icons-material/Launch";
 import type { GridProps } from "@mui/material";
+import { fadeInUp, staggerContainer, scaleIn } from "../utils/animation";
 
 const Projects = () => {
   const theme = useTheme();
@@ -50,13 +51,16 @@ const Projects = () => {
   ];
 
   return (
-    <Box sx={{ py: 12, minHeight: "100vh", bgcolor: "background.default" }}>
+    <Box
+      component={motion.div}
+      variants={staggerContainer}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+      sx={{ py: 12, minHeight: "100vh", bgcolor: "background.default" }}
+    >
       <Container maxWidth="lg">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
+        <motion.div variants={fadeInUp}>
           <Typography
             variant="h2"
             component="h2"
@@ -88,11 +92,7 @@ const Projects = () => {
               component="div"
               {...({} as GridProps)}
             >
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-              >
+              <motion.div variants={scaleIn}>
                 <Card
                   elevation={0}
                   sx={{

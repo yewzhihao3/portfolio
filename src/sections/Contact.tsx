@@ -16,6 +16,12 @@ import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import {
+  fadeInUp,
+  staggerContainer,
+  scaleIn,
+  slideIn,
+} from "../utils/animation";
 
 const Contact = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -60,6 +66,11 @@ const Contact = () => {
 
   return (
     <Box
+      component={motion.div}
+      variants={staggerContainer}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
       sx={{
         py: 12,
         minHeight: "100vh",
@@ -68,11 +79,7 @@ const Contact = () => {
       }}
     >
       <Container maxWidth="xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
+        <motion.div variants={fadeInUp}>
           <Typography
             variant="h2"
             component="h2"
@@ -96,11 +103,7 @@ const Contact = () => {
           </Typography>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
+        <motion.div variants={fadeInUp}>
           <Typography
             variant="h6"
             align="center"
@@ -142,12 +145,7 @@ const Contact = () => {
                 mx: { xs: 1, sm: 2, md: 3 },
               }}
             >
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 + index * 0.1 }}
-                style={{ height: "100%" }}
-              >
+              <motion.div variants={slideIn} style={{ height: "100%" }}>
                 <Paper
                   elevation={0}
                   sx={{

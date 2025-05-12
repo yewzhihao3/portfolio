@@ -1,9 +1,13 @@
 import React from "react";
 import { Box, Container, Typography, Button } from "@mui/material";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { fadeInUp, staggerContainer } from "../utils/animation";
 
 const Home = () => {
+  const { scrollY } = useScroll();
+  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -13,16 +17,23 @@ const Home = () => {
 
   return (
     <Box
+      component={motion.div}
+      style={{ opacity }}
       sx={{
         minHeight: "100vh",
         display: "flex",
         alignItems: "center",
         position: "relative",
-        pt: 8, // Account for fixed navbar
+        pt: 8,
       }}
     >
       <Container maxWidth="lg">
         <Box
+          component={motion.div}
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
           sx={{
             display: "flex",
             flexDirection: "column",
@@ -31,11 +42,7 @@ const Home = () => {
             gap: 4,
           }}
         >
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
+          <motion.div variants={fadeInUp}>
             <Typography
               variant="h1"
               component="h1"
@@ -49,11 +56,7 @@ const Home = () => {
             </Typography>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
+          <motion.div variants={fadeInUp}>
             <Typography
               variant="h2"
               color="primary"
@@ -67,11 +70,7 @@ const Home = () => {
             </Typography>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
+          <motion.div variants={fadeInUp}>
             <Typography
               variant="h5"
               color="text.secondary"
@@ -86,11 +85,7 @@ const Home = () => {
             </Typography>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
+          <motion.div variants={fadeInUp}>
             <Button
               variant="outlined"
               color="primary"
