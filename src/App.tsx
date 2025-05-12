@@ -34,7 +34,7 @@ const getTheme = (mode: "light" | "dark") =>
   });
 
 function App() {
-  const [mode, setMode] = useState<"light" | "dark">("dark");
+  const [mode, setMode] = useState<"light" | "dark">("light");
   const theme = getTheme(mode);
 
   const toggleTheme = () => {
