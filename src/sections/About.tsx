@@ -2,24 +2,10 @@ import React from "react";
 import { Container, Typography, Box, Paper } from "@mui/material";
 import { motion } from "framer-motion";
 import EducationTimeline from "../components/EducationTimeline";
+import Skills from "../components/Skills";
 import { SCHOOL_LOGOS } from "../utils/types";
 
 const About = () => {
-  const skills = [
-    "React",
-    "TypeScript",
-    "JavaScript",
-    "Java",
-    "HTML/CSS",
-    "SQL",
-    "Git",
-    "Object-Oriented Programming",
-    "Web Development",
-    "Database Management",
-    "Systems Analysis",
-    "Mobile Development",
-  ];
-
   const education = [
     {
       school: "Universiti Tunku Abdul Rahman (Kampar)",
@@ -128,61 +114,7 @@ const About = () => {
                 borderColor: "divider",
               }}
             >
-              <Typography
-                variant="h4"
-                gutterBottom
-                sx={{
-                  fontWeight: 500,
-                  textAlign: "center",
-                  color: "primary.main",
-                  mb: 4,
-                }}
-              >
-                Technical Skills
-              </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  gap: 2,
-                  mt: 3,
-                  justifyContent: "center",
-                }}
-              >
-                {skills.map((skill) => (
-                  <motion.div
-                    key={skill}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Paper
-                      elevation={0}
-                      sx={{
-                        px: 3,
-                        py: 1.5,
-                        bgcolor: "background.default",
-                        border: "2px solid",
-                        borderColor: "primary.main",
-                        borderRadius: 2,
-                        color: "text.primary",
-                        transition: "all 0.3s ease",
-                        "&:hover": {
-                          bgcolor: "primary.main",
-                          color: "white",
-                          transform: "translateY(-4px)",
-                          boxShadow: (theme) =>
-                            `0 8px 24px ${theme.palette.primary.main}25`,
-                        },
-                      }}
-                    >
-                      <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                        {skill}
-                      </Typography>
-                    </Paper>
-                  </motion.div>
-                ))}
-              </Box>
+              <Skills />
             </Paper>
           </motion.div>
         </Box>

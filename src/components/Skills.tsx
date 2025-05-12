@@ -1,0 +1,152 @@
+import React from "react";
+import { Typography, Box, Paper, Rating } from "@mui/material";
+import { motion } from "framer-motion";
+import { SkillCategory, Language } from "../utils/types";
+
+const Skills = () => {
+  const technicalSkills: SkillCategory[] = [
+    {
+      name: "Proficient",
+      skills: [
+        "Python",
+        "JavaScript",
+        "React Native",
+        "HTML",
+        "CSS",
+        "Tailwind CSS",
+        "React",
+        "MySQL",
+        "Data Analytics",
+        "Vue 3",
+        "Next.js",
+      ],
+    },
+    {
+      name: "Familiar",
+      skills: ["CSS", "Git", "MS Excel", "TypeScript"],
+    },
+  ];
+
+  const languages: Language[] = [
+    { name: "English", proficiency: 5 },
+    { name: "Bahasa Melayu (Malay)", proficiency: 4 },
+    { name: "Mandarin", proficiency: 3 },
+  ];
+
+  return (
+    <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
+      {/* Technical Skills Section */}
+      <Box>
+        <Typography
+          variant="h5"
+          gutterBottom
+          sx={{
+            fontWeight: 500,
+            color: "primary.main",
+            mb: 3,
+          }}
+        >
+          Technical Skills
+        </Typography>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+          {technicalSkills.map((category) => (
+            <Box key={category.name}>
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  fontWeight: 500,
+                  mb: 2,
+                  color: "text.secondary",
+                }}
+              >
+                {category.name}:
+              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 2,
+                }}
+              >
+                {category.skills.map((skill) => (
+                  <motion.div
+                    key={skill}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Paper
+                      elevation={0}
+                      sx={{
+                        px: 3,
+                        py: 1.5,
+                        bgcolor: "background.paper",
+                        border: "1px solid",
+                        borderColor: "divider",
+                        borderRadius: 2,
+                        transition: "all 0.3s ease",
+                        "&:hover": {
+                          borderColor: "primary.main",
+                          transform: "translateY(-2px)",
+                          boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+                        },
+                      }}
+                    >
+                      <Typography variant="body2">{skill}</Typography>
+                    </Paper>
+                  </motion.div>
+                ))}
+              </Box>
+            </Box>
+          ))}
+        </Box>
+      </Box>
+
+      {/* Languages Section */}
+      <Box>
+        <Typography
+          variant="h5"
+          gutterBottom
+          sx={{
+            fontWeight: 500,
+            color: "primary.main",
+            mb: 3,
+          }}
+        >
+          Languages
+        </Typography>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          {languages.map((language) => (
+            <Box
+              key={language.name}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                p: 2,
+                bgcolor: "background.paper",
+                borderRadius: 1,
+                border: "1px solid",
+                borderColor: "divider",
+              }}
+            >
+              <Typography variant="body1">{language.name}</Typography>
+              <Rating
+                value={language.proficiency}
+                readOnly
+                max={5}
+                sx={{
+                  "& .MuiRating-icon": {
+                    color: "primary.main",
+                  },
+                }}
+              />
+            </Box>
+          ))}
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
+export default Skills;

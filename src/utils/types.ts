@@ -10,6 +10,15 @@ export interface Education {
   logoUrl: string;
 }
 
+export interface SkillCategory {
+  name: string;
+  skills: string[];
+}
+
+export interface Language {
+  name: string;
+  proficiency: number;
+}
 // School logo URLs
 export const SCHOOL_LOGOS = {
   UTAR: "https://upload.wikimedia.org/wikipedia/en/f/f1/Universiti_Tunku_Abdul_Rahman_Logo.jpg",
