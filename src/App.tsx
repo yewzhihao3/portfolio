@@ -44,7 +44,15 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ minHeight: "100vh" }}>
+      <Box
+        sx={{
+          minHeight: "100vh",
+          background:
+            mode === "light"
+              ? "linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(245,245,245,1) 100%)"
+              : "linear-gradient(180deg, rgba(18,18,18,0) 0%, rgba(30,30,30,1) 100%)",
+        }}
+      >
         <Navbar toggleTheme={toggleTheme} mode={mode} />
         <Box component="main">
           <section id="home">

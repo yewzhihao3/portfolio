@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Container,
@@ -7,6 +7,7 @@ import {
   Paper,
   IconButton,
   Grid,
+  Snackbar,
 } from "@mui/material";
 import type { GridProps } from "@mui/material";
 import { motion } from "framer-motion";
@@ -14,32 +15,46 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 const Contact = () => {
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+
+  const handleCopy = (text: string, label: string) => {
+    navigator.clipboard.writeText(text);
+    setSnackbarMessage(`${label} copied to clipboard!`);
+    setSnackbarOpen(true);
+  };
+
   const contactInfo = [
     {
       icon: <EmailIcon fontSize="large" />,
       label: "Email",
       value: "yewzhihao3@gmail.com",
-      link: "mailto:yewzhihao3@gmail.com",
+      link: null,
+      copyable: true,
     },
     {
       icon: <PhoneIcon fontSize="large" />,
       label: "Phone",
       value: "+60-11-1107-5923",
-      link: "tel:+60111107592",
+      link: "https://wa.me/60111107592",
+      copyable: true,
     },
     {
       icon: <LocationOnIcon fontSize="large" />,
       label: "Location",
       value: "Bayan Lepas, Penang",
       link: null,
+      copyable: true,
     },
     {
       icon: <LinkedInIcon fontSize="large" />,
       label: "LinkedIn",
       value: "linkedin.com/in/yewzhihao",
       link: "https://www.linkedin.com/in/yewzhihao/",
+      copyable: true,
     },
   ];
 
@@ -52,7 +67,7 @@ const Contact = () => {
         alignItems: "center",
       }}
     >
-      <Container maxWidth="md">
+      <Container maxWidth="xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -65,13 +80,15 @@ const Contact = () => {
             sx={{
               fontWeight: 300,
               mb: 6,
+              color: "text.primary",
               "&::after": {
                 content: '""',
                 display: "block",
-                width: "60px",
-                height: "3px",
+                width: "40px",
+                height: "2px",
                 bgcolor: "primary.main",
                 margin: "20px auto 0",
+                opacity: 0.7,
               },
             }}
           >
@@ -85,83 +102,175 @@ const Contact = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <Typography
-            variant="h5"
+            variant="h6"
             align="center"
             color="text.secondary"
-            sx={{ mb: 8, maxWidth: "600px", mx: "auto", fontWeight: 300 }}
+            sx={{
+              mb: 8,
+              maxWidth: "800px",
+              mx: "auto",
+              fontWeight: 300,
+              lineHeight: 1.8,
+            }}
           >
             I'm always open to new opportunities and collaborations. Feel free
             to reach out through any of the following channels.
           </Typography>
         </motion.div>
 
-        <Grid container spacing={4} justifyContent="center">
+        <Grid
+          container
+          spacing={4}
+          justifyContent="center"
+          alignItems="stretch"
+          sx={{
+            maxWidth: "1600px",
+            mx: "auto",
+            flexWrap: "nowrap",
+            px: { xs: 2, sm: 4, md: 6 },
+          }}
+        >
           {contactInfo.map((info, index) => (
             <Grid
               item
-              xs={12}
-              sm={6}
               key={info.label}
               component="div"
               {...({} as GridProps)}
+              sx={{
+                flex: 1,
+                minWidth: 0,
+                mx: { xs: 1, sm: 2, md: 3 },
+              }}
             >
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 + index * 0.1 }}
+                style={{ height: "100%" }}
               >
                 <Paper
                   elevation={0}
                   sx={{
-                    p: 3,
+                    p: { xs: 2.5, sm: 3, md: 4 },
                     height: "100%",
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
                     textAlign: "center",
                     bgcolor: "background.paper",
-                    border: "1px solid",
-                    borderColor: "divider",
-                    borderRadius: 2,
+                    borderRadius: 4,
                     transition: "all 0.3s ease",
+                    boxShadow: "0 4px 24px rgba(0,0,0,0.05)",
                     "&:hover": {
-                      borderColor: "primary.main",
                       transform: "translateY(-4px)",
+                      boxShadow: "0 8px 32px rgba(147,51,234,0.15)",
                     },
                   }}
                 >
-                  <IconButton
-                    color="primary"
+                  <Box
                     sx={{
                       mb: 2,
-                      transform: "scale(1.2)",
-                      "&:hover": { transform: "scale(1.3)" },
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
                     }}
-                    component={info.link ? Link : "button"}
-                    href={info.link || undefined}
-                    target={info.link ? "_blank" : undefined}
                   >
-                    {info.icon}
-                  </IconButton>
-                  <Typography variant="h6" gutterBottom>
+                    <IconButton
+                      sx={{
+                        transform: "scale(1.1)",
+                        transition: "all 0.3s ease",
+                        background: "rgba(147,51,234,0.05)",
+                        "&:hover": {
+                          transform: "scale(1.2)",
+                          background: "rgba(147,51,234,0.1)",
+                        },
+                        color: "primary.main",
+                        "&.Mui-disabled": {
+                          color: "primary.main",
+                        },
+                        p: 2,
+                      }}
+                      component={info.link ? Link : "button"}
+                      href={info.link || undefined}
+                      target={info.link ? "_blank" : undefined}
+                      disabled={!info.link}
+                    >
+                      {info.icon}
+                    </IconButton>
+                  </Box>
+                  <Typography
+                    variant="h6"
+                    gutterBottom
+                    sx={{
+                      fontWeight: 500,
+                      mb: 1,
+                      fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
+                      letterSpacing: "0.5px",
+                    }}
+                  >
                     {info.label}
                   </Typography>
-                  <Typography
-                    color="text.secondary"
+                  <Box
                     sx={{
-                      "&:hover": {
-                        color: info.link ? "primary.main" : "inherit",
-                      },
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 1,
+                      minHeight: "24px",
                     }}
                   >
-                    {info.value}
-                  </Typography>
+                    <Typography
+                      component={info.link ? Link : "div"}
+                      href={info.link || undefined}
+                      target={info.link ? "_blank" : undefined}
+                      color="text.secondary"
+                      sx={{
+                        textDecoration: "none",
+                        fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        transition: "color 0.3s ease",
+                        "&:hover": {
+                          color: info.link ? "primary.main" : "inherit",
+                          cursor: info.link ? "pointer" : "default",
+                        },
+                      }}
+                    >
+                      {info.value}
+                    </Typography>
+                    {info.copyable && (
+                      <IconButton
+                        size="small"
+                        onClick={() => handleCopy(info.value, info.label)}
+                        sx={{
+                          color: "primary.main",
+                          opacity: 0.8,
+                          flexShrink: 0,
+                          transition: "all 0.3s ease",
+                          "&:hover": {
+                            opacity: 1,
+                            transform: "scale(1.1)",
+                            background: "rgba(147,51,234,0.1)",
+                          },
+                        }}
+                      >
+                        <ContentCopyIcon fontSize="small" />
+                      </IconButton>
+                    )}
+                  </Box>
                 </Paper>
               </motion.div>
             </Grid>
           ))}
         </Grid>
       </Container>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpen(false)}
+        message={snackbarMessage}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      />
     </Box>
   );
 };
