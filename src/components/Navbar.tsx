@@ -70,7 +70,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, mode }) => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  });
 
   const drawer = (
     <List sx={{ pt: 8 }}>

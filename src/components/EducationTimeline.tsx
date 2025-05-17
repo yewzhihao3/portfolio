@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Paper, Typography } from "@mui/material";
 import { motion } from "framer-motion";
-import SchoolIcon from "@mui/icons-material/School";
 import { Education } from "../utils/types";
 
 interface EducationTimelineProps {

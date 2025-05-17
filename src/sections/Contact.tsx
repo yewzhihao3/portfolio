@@ -8,19 +8,13 @@ import {
   IconButton,
   Snackbar,
 } from "@mui/material";
-import Grid from "@mui/material/Grid";
 import { motion } from "framer-motion";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import {
-  fadeInUp,
-  staggerContainer,
-  scaleIn,
-  slideIn,
-} from "../utils/animation";
+import { fadeInUp, staggerContainer, slideIn } from "../utils/animation";
 
 const Contact = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
