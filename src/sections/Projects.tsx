@@ -164,12 +164,14 @@ const Projects = () => {
             disabled={currentIndex === 0}
             sx={{
               position: "absolute",
-              left: { xs: -16, md: -20 },
+              left: { xs: -8, sm: -12, md: -20 },
               top: "50%",
               transform: "translateY(-50%)",
               zIndex: 2,
               bgcolor: "background.paper",
               boxShadow: theme.shadows[2],
+              width: { xs: 32, sm: 40, md: 48 },
+              height: { xs: 32, sm: 40, md: 48 },
               "&:hover": {
                 bgcolor: "background.paper",
               },
@@ -178,7 +180,9 @@ const Projects = () => {
               },
             }}
           >
-            <ArrowBackIosNewIcon />
+            <ArrowBackIosNewIcon
+              sx={{ fontSize: { xs: "1.2rem", sm: "1.5rem", md: "1.8rem" } }}
+            />
           </IconButton>
 
           {/* Right Arrow */}
@@ -187,12 +191,14 @@ const Projects = () => {
             disabled={currentIndex === projects.length - 1}
             sx={{
               position: "absolute",
-              right: { xs: -16, md: -20 },
+              right: { xs: -8, sm: -12, md: -20 },
               top: "50%",
               transform: "translateY(-50%)",
               zIndex: 2,
               bgcolor: "background.paper",
               boxShadow: theme.shadows[2],
+              width: { xs: 32, sm: 40, md: 48 },
+              height: { xs: 32, sm: 40, md: 48 },
               "&:hover": {
                 bgcolor: "background.paper",
               },
@@ -201,7 +207,9 @@ const Projects = () => {
               },
             }}
           >
-            <ArrowForwardIosIcon />
+            <ArrowForwardIosIcon
+              sx={{ fontSize: { xs: "1.2rem", sm: "1.5rem", md: "1.8rem" } }}
+            />
           </IconButton>
 
           {/* Scrollable Container */}
@@ -266,6 +274,7 @@ const Projects = () => {
                         objectFit: "contain",
                         bgcolor: "background.default",
                         p: 2,
+                        height: { xs: "250px", sm: "300px", md: "400px" },
                         "&:hover": {
                           transform: "scale(1.02)",
                           transition: "transform 0.3s ease-in-out",
@@ -276,9 +285,9 @@ const Projects = () => {
                       className="project-number"
                       sx={{
                         position: "absolute",
-                        top: 32,
-                        right: 32,
-                        fontSize: "6rem",
+                        top: { xs: 16, md: 32 },
+                        right: { xs: 16, md: 32 },
+                        fontSize: { xs: "4rem", sm: "5rem", md: "6rem" },
                         fontWeight: 700,
                         opacity: 0.06,
                         lineHeight: 1,
@@ -291,12 +300,12 @@ const Projects = () => {
                     </Box>
                     <CardContent
                       sx={{
-                        p: 5,
-                        pb: 3,
+                        p: { xs: 3, sm: 4, md: 5 },
+                        pb: { xs: 2, sm: 2.5, md: 3 },
                         flexGrow: 1,
                         display: "flex",
                         flexDirection: "column",
-                        gap: 4,
+                        gap: { xs: 2, sm: 3, md: 4 },
                       }}
                     >
                       <Typography
@@ -304,7 +313,11 @@ const Projects = () => {
                         component="h3"
                         sx={{
                           fontWeight: 600,
-                          fontSize: { xs: "2rem", md: "2.25rem" },
+                          fontSize: {
+                            xs: "1.5rem",
+                            sm: "1.75rem",
+                            md: "2.25rem",
+                          },
                           lineHeight: 1.2,
                         }}
                       >
@@ -315,7 +328,7 @@ const Projects = () => {
                         color="text.secondary"
                         sx={{
                           lineHeight: 1.8,
-                          fontSize: { xs: "1rem", md: "1.1rem" },
+                          fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
                         }}
                       >
                         {project.description}
@@ -324,7 +337,7 @@ const Projects = () => {
                         sx={{
                           display: "flex",
                           flexWrap: "wrap",
-                          gap: 2,
+                          gap: { xs: 1, sm: 1.5, md: 2 },
                           mt: "auto",
                         }}
                       >
@@ -333,13 +346,17 @@ const Projects = () => {
                             key={tech}
                             variant="body2"
                             sx={{
-                              px: 2.5,
-                              py: 1,
+                              px: { xs: 1.5, sm: 2, md: 2.5 },
+                              py: { xs: 0.5, sm: 0.75, md: 1 },
                               bgcolor: "background.default",
                               borderRadius: 2,
                               color: "primary.main",
                               fontWeight: 500,
-                              fontSize: "0.95rem",
+                              fontSize: {
+                                xs: "0.8rem",
+                                sm: "0.85rem",
+                                md: "0.95rem",
+                              },
                             }}
                           >
                             {tech}
@@ -349,8 +366,8 @@ const Projects = () => {
                     </CardContent>
                     <CardActions
                       sx={{
-                        p: 5,
-                        pt: 3,
+                        p: { xs: 3, sm: 4, md: 5 },
+                        pt: { xs: 2, sm: 2.5, md: 3 },
                       }}
                     >
                       <Button
@@ -363,8 +380,8 @@ const Projects = () => {
                         sx={{
                           borderRadius: 2,
                           textTransform: "none",
-                          py: 2,
-                          fontSize: "1.1rem",
+                          py: { xs: 1.5, md: 2 },
+                          fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
                         }}
                       >
                         View on GitHub
@@ -381,8 +398,8 @@ const Projects = () => {
             sx={{
               display: "flex",
               justifyContent: "center",
-              gap: 1,
-              mt: 4,
+              gap: { xs: 0.75, sm: 1 },
+              mt: { xs: 2, sm: 3, md: 4 },
             }}
           >
             {projects.map((_, index) => (
@@ -390,8 +407,8 @@ const Projects = () => {
                 key={index}
                 onClick={() => handleDotClick(index)}
                 sx={{
-                  width: 12,
-                  height: 12,
+                  width: { xs: 8, sm: 10, md: 12 },
+                  height: { xs: 8, sm: 10, md: 12 },
                   borderRadius: "50%",
                   bgcolor: currentIndex === index ? "primary.main" : "divider",
                   cursor: "pointer",

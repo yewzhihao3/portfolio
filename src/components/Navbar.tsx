@@ -7,6 +7,12 @@ import {
   Box,
   IconButton,
   useTheme,
+  useMediaQuery,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
 } from "@mui/material";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
@@ -14,6 +20,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
 import WorkIcon from "@mui/icons-material/Work";
 import EmailIcon from "@mui/icons-material/Email";
+import MenuIcon from "@mui/icons-material/Menu";
 
 interface NavbarProps {
   toggleTheme: () => void;
@@ -21,36 +28,10 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ toggleTheme, mode }) => {
-  const theme = useTheme();
   const [activeSection, setActiveSection] = useState("home");
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = ["home", "about", "projects", "contact"];
-      const currentSection = sections.find((section) => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top >= -100 && rect.top <= 150;
-        }
-        return false;
-      });
-      if (currentSection) {
-        setActiveSection(currentSection);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setActiveSection(sectionId);
-    }
-  };
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const navItems = [
     { id: "home", label: "Home", icon: <HomeIcon /> },
@@ -58,6 +39,68 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, mode }) => {
     { id: "projects", label: "Projects", icon: <WorkIcon /> },
     { id: "contact", label: "Contact", icon: <EmailIcon /> },
   ];
+
+  const handleDrawerToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      setMobileOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = navItems.map((item) => document.getElementById(item.id));
+      const currentSection = sections.find((section) => {
+        if (section) {
+          const rect = section.getBoundingClientRect();
+          return rect.top <= 100 && rect.bottom >= 100;
+        }
+        return false;
+      });
+
+      if (currentSection) {
+        setActiveSection(currentSection.id);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const drawer = (
+    <List sx={{ pt: 8 }}>
+      {navItems.map((item) => (
+        <ListItem
+          key={item.id}
+          onClick={() => scrollToSection(item.id)}
+          sx={{
+            color: activeSection === item.id ? "primary.main" : "text.primary",
+            cursor: "pointer",
+            "&:hover": {
+              bgcolor:
+                mode === "light"
+                  ? "rgba(0, 0, 0, 0.04)"
+                  : "rgba(255, 255, 255, 0.08)",
+            },
+          }}
+        >
+          <ListItemIcon
+            sx={{
+              color: activeSection === item.id ? "primary.main" : "inherit",
+            }}
+          >
+            {item.icon}
+          </ListItemIcon>
+          <ListItemText primary={item.label} />
+        </ListItem>
+      ))}
+    </List>
+  );
 
   return (
     <AppBar
@@ -73,12 +116,11 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, mode }) => {
         borderColor: "divider",
       }}
     >
-      <Toolbar>
+      <Toolbar sx={{ justifyContent: "space-between" }}>
         <Typography
           variant="h6"
           component="div"
           sx={{
-            flexGrow: 1,
             cursor: "pointer",
             color: mode === "light" ? "#000000" : "#ffffff",
             fontWeight: 600,
@@ -90,65 +132,108 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, mode }) => {
         >
           Yew Zhi Hao
         </Typography>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-          {navItems.map((item) => (
-            <Button
-              key={item.id}
-              onClick={() => scrollToSection(item.id)}
+
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+          {!isMobile && (
+            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              {navItems.map((item) => (
+                <Button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  sx={{
+                    fontWeight: 500,
+                    px: 2,
+                    py: 1,
+                    borderRadius: 2,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 0.5,
+                    position: "relative",
+                    color:
+                      activeSection === item.id
+                        ? "primary.main"
+                        : "text.primary",
+                    "&::after": {
+                      content: '""',
+                      position: "absolute",
+                      bottom: 0,
+                      left: "50%",
+                      transform:
+                        activeSection === item.id
+                          ? "translateX(-50%)"
+                          : "translateX(-50%) scaleX(0)",
+                      height: "3px",
+                      width: "80%",
+                      backgroundColor: "primary.main",
+                      transition: "transform 0.3s ease",
+                    },
+                    "&:hover": {
+                      color: "primary.main",
+                      backgroundColor:
+                        mode === "light"
+                          ? "rgba(0, 0, 0, 0.04)"
+                          : "rgba(255, 255, 255, 0.08)",
+                    },
+                  }}
+                >
+                  {item.icon}
+                  {item.label}
+                </Button>
+              ))}
+            </Box>
+          )}
+
+          {isMobile && (
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="start"
+              onClick={handleDrawerToggle}
               sx={{
-                fontWeight: 500,
-                px: 2,
-                py: 1,
-                borderRadius: 2,
-                display: "flex",
-                alignItems: "center",
-                gap: 0.5,
-                position: "relative",
-                color:
-                  activeSection === item.id
-                    ? "primary.main"
-                    : mode === "light"
-                    ? "#000000"
-                    : "#ffffff",
-                "&::after": {
-                  content: '""',
-                  position: "absolute",
-                  bottom: 0,
-                  left: "50%",
-                  transform:
-                    activeSection === item.id
-                      ? "translateX(-50%)"
-                      : "translateX(-50%) scaleX(0)",
-                  height: "3px",
-                  width: "80%",
-                  backgroundColor: "primary.main",
-                  transition: "transform 0.3s ease",
-                },
-                "&:hover": {
-                  color: "primary.main",
-                  backgroundColor:
-                    mode === "light"
-                      ? "rgba(0, 0, 0, 0.04)"
-                      : "rgba(255, 255, 255, 0.08)",
-                },
+                color: mode === "light" ? "text.primary" : "#ffffff",
               }}
             >
-              {item.icon}
-              {item.label}
-            </Button>
-          ))}
+              <MenuIcon />
+            </IconButton>
+          )}
+
           <IconButton
-            sx={{
-              ml: 1,
-              color: mode === "light" ? "#000000" : "#ffffff",
-              "&:hover": { color: "primary.main" },
-              transition: "color 0.3s ease",
-            }}
             onClick={toggleTheme}
+            sx={{
+              color: mode === "light" ? "text.primary" : "#ffffff",
+              ml: 2,
+              "&:hover": {
+                backgroundColor:
+                  mode === "light"
+                    ? "rgba(0, 0, 0, 0.04)"
+                    : "rgba(255, 255, 255, 0.08)",
+              },
+            }}
           >
             {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
           </IconButton>
         </Box>
+
+        <Drawer
+          variant="temporary"
+          anchor="right"
+          open={mobileOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{
+            keepMounted: true,
+          }}
+          sx={{
+            display: { xs: "block", md: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: 240,
+              bgcolor:
+                mode === "light" ? "background.paper" : "background.default",
+            },
+          }}
+        >
+          {drawer}
+        </Drawer>
       </Toolbar>
     </AppBar>
   );

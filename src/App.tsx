@@ -30,6 +30,87 @@ const getTheme = (mode: "light" | "dark") =>
     },
     typography: {
       fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+      h1: {
+        fontSize: "4.5rem",
+        "@media (max-width:960px)": {
+          fontSize: "3.5rem",
+        },
+        "@media (max-width:600px)": {
+          fontSize: "2.5rem",
+        },
+      },
+      h2: {
+        fontSize: "3.5rem",
+        "@media (max-width:960px)": {
+          fontSize: "2.5rem",
+        },
+        "@media (max-width:600px)": {
+          fontSize: "2rem",
+        },
+      },
+      h3: {
+        fontSize: "2.5rem",
+        "@media (max-width:960px)": {
+          fontSize: "2rem",
+        },
+        "@media (max-width:600px)": {
+          fontSize: "1.75rem",
+        },
+      },
+      h4: {
+        fontSize: "2rem",
+        "@media (max-width:960px)": {
+          fontSize: "1.75rem",
+        },
+        "@media (max-width:600px)": {
+          fontSize: "1.5rem",
+        },
+      },
+      body1: {
+        fontSize: "1.1rem",
+        "@media (max-width:600px)": {
+          fontSize: "1rem",
+        },
+      },
+      body2: {
+        fontSize: "1rem",
+        "@media (max-width:600px)": {
+          fontSize: "0.875rem",
+        },
+      },
+    },
+    components: {
+      MuiContainer: {
+        styleOverrides: {
+          root: {
+            paddingLeft: "24px",
+            paddingRight: "24px",
+            "@media (max-width:600px)": {
+              paddingLeft: "16px",
+              paddingRight: "16px",
+            },
+          },
+        },
+      },
+      MuiButton: {
+        styleOverrides: {
+          root: {
+            "@media (max-width:600px)": {
+              fontSize: "0.875rem",
+              padding: "6px 16px",
+            },
+          },
+        },
+      },
+    },
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 600,
+        md: 960,
+        lg: 1280,
+        xl: 1920,
+      },
     },
   });
 
