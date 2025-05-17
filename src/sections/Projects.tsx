@@ -9,6 +9,7 @@ import {
   useTheme,
   Paper,
   IconButton,
+  CardMedia,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -23,25 +24,55 @@ const Projects = () => {
 
   const projects = [
     {
-      title: "Portfolio Website",
+      title: "PetPaw - Comprehensive Pet Care Platform",
       description:
-        "A modern, responsive portfolio website built with React, TypeScript, and Material-UI. Features smooth animations and dark mode support.",
-      technologies: ["React", "TypeScript", "Material-UI"],
-      github: "#",
+        "A feature-rich mobile application built with React Native that serves as an all-in-one pet care solution. Features include pet hotel booking, grooming services, pet taxi, interactive blog platform, personal pet diary, and a dedicated e-commerce marketplace. The app integrates multiple payment gateways, real-time booking systems, and location-based services to provide a seamless experience for pet owners.",
+      technologies: [
+        "React Native",
+        "Node.js",
+        "Python FastAPI",
+        "MYSQL",
+        "Google Maps API",
+      ],
+      github: "https://github.com/yewzhihao3/PetPaw-React-Native",
+      image: "/images/petpaw-showcase.jpg",
     },
     {
-      title: "Project Management System",
+      title: "Electric Bill Calculator",
       description:
-        "A comprehensive project management system with task tracking, team collaboration, and progress monitoring features.",
-      technologies: ["Java", "MySQL", "Spring Boot"],
-      github: "#",
+        "An interactive Python application for calculating and analyzing monthly electric bills. Features include consumption-based tariff calculation, data persistence using CSV, monthly bill tracking, and data visualization with matplotlib. The system implements a multi-tier pricing structure and includes a green energy tariff calculator.",
+      technologies: [
+        "Python",
+        "Matplotlib",
+        "CSV Data Management",
+        "Data Visualization",
+      ],
+      github: "https://github.com/yewzhihao3/Side-Projects",
+      image: "/images/electric-bill.jpg",
     },
     {
-      title: "Mobile Learning App",
+      title: "Python Banking System",
       description:
-        "An educational mobile application designed to help students learn programming concepts through interactive exercises.",
-      technologies: ["React Native", "Node.js", "MongoDB"],
-      github: "#",
+        "A robust banking system implementation featuring account management, transactions, and security measures. Includes features for deposits, withdrawals, transfers, and account statement generation with proper error handling and data persistence.",
+      technologies: ["Python", "Object-Oriented Programming"],
+      github: "https://github.com/yewzhihao3/Side-Projects",
+      image: "/images/banking-system.jpg",
+    },
+    {
+      title: "Bike Sales Analytics Dashboard",
+      description:
+        "A comprehensive data analytics project focused on bike sales analysis. Developed interactive dashboards to visualize sales trends, customer demographics, and revenue metrics. Implemented predictive analytics for sales forecasting.",
+      technologies: ["Python", "Pandas", "Data Visualization"],
+      github: "https://github.com/yewzhihao3/Data-analytics",
+      image: "/images/bike-analytics.jpg",
+    },
+    {
+      title: "Online Pharmacy Management System",
+      description:
+        "A web-based pharmacy management system that handles inventory, prescriptions, and sales. Features include medication tracking, prescription validation, stock management, and automated reordering system.",
+      technologies: ["Python", "Object-Oriented Programming"],
+      github: "https://github.com/yewzhihao3/Side-Projects",
+      image: "/images/pharmacy-system.jpg",
     },
   ];
 
@@ -226,6 +257,15 @@ const Projects = () => {
                       },
                     }}
                   >
+                    <CardMedia
+                      component="img"
+                      height="240"
+                      image={project.image}
+                      alt={project.title}
+                      sx={{
+                        objectFit: "cover",
+                      }}
+                    />
                     <Box
                       className="project-number"
                       sx={{
@@ -237,6 +277,7 @@ const Projects = () => {
                         opacity: 0.06,
                         lineHeight: 1,
                         transition: "color 0.3s ease",
+                        color: "#fff",
                       }}
                     >
                       {String(index + 1).padStart(2, "0")}
