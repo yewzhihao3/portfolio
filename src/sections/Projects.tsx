@@ -35,7 +35,7 @@ const Projects = () => {
         "Google Maps API",
       ],
       github: "https://github.com/yewzhihao3/PetPaw-React-Native",
-      image: "/images/petpaw-showcase.jpg",
+      image: "/images/PetPaw.png",
     },
     {
       title: "Electric Bill Calculator",
@@ -48,7 +48,7 @@ const Projects = () => {
         "Data Visualization",
       ],
       github: "https://github.com/yewzhihao3/Side-Projects",
-      image: "/images/electric-bill.jpg",
+      image: "/images/eleteric.webp",
     },
     {
       title: "Python Banking System",
@@ -56,7 +56,7 @@ const Projects = () => {
         "A robust banking system implementation featuring account management, transactions, and security measures. Includes features for deposits, withdrawals, transfers, and account statement generation with proper error handling and data persistence.",
       technologies: ["Python", "Object-Oriented Programming"],
       github: "https://github.com/yewzhihao3/Side-Projects",
-      image: "/images/banking-system.jpg",
+      image: "/images/bank.jpg",
     },
     {
       title: "Bike Sales Analytics Dashboard",
@@ -64,7 +64,7 @@ const Projects = () => {
         "A comprehensive data analytics project focused on bike sales analysis. Developed interactive dashboards to visualize sales trends, customer demographics, and revenue metrics. Implemented predictive analytics for sales forecasting.",
       technologies: ["Python", "Pandas", "Data Visualization"],
       github: "https://github.com/yewzhihao3/Data-analytics",
-      image: "/images/bike-analytics.jpg",
+      image: "/images/bike_sales.png",
     },
     {
       title: "Online Pharmacy Management System",
@@ -72,7 +72,7 @@ const Projects = () => {
         "A web-based pharmacy management system that handles inventory, prescriptions, and sales. Features include medication tracking, prescription validation, stock management, and automated reordering system.",
       technologies: ["Python", "Object-Oriented Programming"],
       github: "https://github.com/yewzhihao3/Side-Projects",
-      image: "/images/pharmacy-system.jpg",
+      image: "/images/pharmacy.jpg",
     },
   ];
 
@@ -259,37 +259,44 @@ const Projects = () => {
                   >
                     <CardMedia
                       component="img"
-                      height="240"
+                      height="400"
                       image={project.image}
                       alt={project.title}
                       sx={{
-                        objectFit: "cover",
+                        objectFit: "contain",
+                        bgcolor: "background.default",
+                        p: 2,
+                        "&:hover": {
+                          transform: "scale(1.02)",
+                          transition: "transform 0.3s ease-in-out",
+                        },
                       }}
                     />
                     <Box
                       className="project-number"
                       sx={{
                         position: "absolute",
-                        top: 24,
-                        right: 24,
-                        fontSize: "5rem",
+                        top: 32,
+                        right: 32,
+                        fontSize: "6rem",
                         fontWeight: 700,
                         opacity: 0.06,
                         lineHeight: 1,
                         transition: "color 0.3s ease",
                         color: "#fff",
+                        zIndex: 1,
                       }}
                     >
                       {String(index + 1).padStart(2, "0")}
                     </Box>
                     <CardContent
                       sx={{
-                        p: 4,
-                        pb: 2,
+                        p: 5,
+                        pb: 3,
                         flexGrow: 1,
                         display: "flex",
                         flexDirection: "column",
-                        gap: 3,
+                        gap: 4,
                       }}
                     >
                       <Typography
@@ -297,7 +304,7 @@ const Projects = () => {
                         component="h3"
                         sx={{
                           fontWeight: 600,
-                          fontSize: { xs: "1.75rem", md: "2rem" },
+                          fontSize: { xs: "2rem", md: "2.25rem" },
                           lineHeight: 1.2,
                         }}
                       >
@@ -307,7 +314,8 @@ const Projects = () => {
                         variant="body1"
                         color="text.secondary"
                         sx={{
-                          lineHeight: 1.6,
+                          lineHeight: 1.8,
+                          fontSize: { xs: "1rem", md: "1.1rem" },
                         }}
                       >
                         {project.description}
@@ -316,7 +324,7 @@ const Projects = () => {
                         sx={{
                           display: "flex",
                           flexWrap: "wrap",
-                          gap: 1.5,
+                          gap: 2,
                           mt: "auto",
                         }}
                       >
@@ -325,12 +333,13 @@ const Projects = () => {
                             key={tech}
                             variant="body2"
                             sx={{
-                              px: 2,
-                              py: 0.75,
+                              px: 2.5,
+                              py: 1,
                               bgcolor: "background.default",
                               borderRadius: 2,
                               color: "primary.main",
                               fontWeight: 500,
+                              fontSize: "0.95rem",
                             }}
                           >
                             {tech}
@@ -340,8 +349,8 @@ const Projects = () => {
                     </CardContent>
                     <CardActions
                       sx={{
-                        p: 4,
-                        pt: 2,
+                        p: 5,
+                        pt: 3,
                       }}
                     >
                       <Button
@@ -354,8 +363,8 @@ const Projects = () => {
                         sx={{
                           borderRadius: 2,
                           textTransform: "none",
-                          py: 1.5,
-                          fontSize: "1rem",
+                          py: 2,
+                          fontSize: "1.1rem",
                         }}
                       >
                         View on GitHub
