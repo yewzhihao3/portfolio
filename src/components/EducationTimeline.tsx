@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Paper, Typography, useTheme, useMediaQuery } from "@mui/material";
-import { motion } from "framer-motion";
+import { Box, Paper, Typography, useTheme } from "@mui/material";
 import { Education } from "../utils/types";
 
 interface EducationTimelineProps {
@@ -9,8 +8,6 @@ interface EducationTimelineProps {
 
 const EducationTimeline: React.FC<EducationTimelineProps> = ({ education }) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  const isTablet = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
     <Box sx={{ width: "100%", position: "relative" }}>
