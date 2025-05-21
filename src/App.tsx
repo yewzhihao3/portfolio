@@ -1,6 +1,11 @@
 import React, { useState } from "react";
-import { ThemeProvider, createTheme, Box } from "@mui/material";
-import CssBaseline from "@mui/material/CssBaseline";
+import {
+  ThemeProvider,
+  createTheme,
+  Box,
+  CssBaseline,
+  GlobalStyles,
+} from "@mui/material";
 import Navbar from "./components/Navbar";
 import Home from "./sections/Home";
 import About from "./sections/About";
@@ -160,6 +165,48 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      <GlobalStyles
+        styles={{
+          "*::-webkit-scrollbar": {
+            width: "8px",
+            "@media (max-width: 600px)": {
+              display: "none",
+            },
+          },
+          "*::-webkit-scrollbar-track": {
+            background: "#f1f1f1",
+            "@media (max-width: 600px)": {
+              display: "none",
+            },
+          },
+          "*::-webkit-scrollbar-thumb": {
+            background: "#888",
+            borderRadius: "4px",
+            "&:hover": {
+              background: "#555",
+            },
+            "@media (max-width: 600px)": {
+              display: "none",
+            },
+          },
+          body: {
+            "@media (max-width: 600px)": {
+              scrollbarWidth: "none", // Firefox
+              msOverflowStyle: "none", // IE/Edge
+              "&::-webkit-scrollbar": {
+                // Chrome/Safari/Opera
+                display: "none",
+              },
+            },
+          },
+          html: {
+            "@media (max-width: 600px)": {
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+            },
+          },
+        }}
+      />
       <Box
         component={motion.div}
         variants={pageVariants}
