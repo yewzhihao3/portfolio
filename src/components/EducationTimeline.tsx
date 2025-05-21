@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Paper, Typography, useTheme } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import { Education } from "../utils/types";
 
 interface EducationTimelineProps {
@@ -7,173 +7,185 @@ interface EducationTimelineProps {
 }
 
 const EducationTimeline: React.FC<EducationTimelineProps> = ({ education }) => {
-  const theme = useTheme();
-
   return (
-    <Box sx={{ width: "100%", position: "relative" }}>
-      {education.map((edu, index) => (
-        <Box
-          key={edu.degree}
-          sx={{
-            position: "relative",
-            mb: index === education.length - 1 ? 0 : { xs: 6, sm: 8 },
-            "&::after":
-              index !== education.length - 1
-                ? {
-                    content: '""',
-                    position: "absolute",
-                    left: { xs: "50%", sm: "20px" },
-                    bottom: { xs: "-40px", sm: "-60px" },
-                    transform: { xs: "translateX(-50%)", sm: "none" },
-                    width: { xs: "2px", sm: "2px" },
-                    height: { xs: "40px", sm: "60px" },
-                    bgcolor: "primary.main",
-                    opacity: 0.3,
-                  }
-                : {},
-          }}
-        >
-          <Paper
-            elevation={0}
+    <Box sx={{ width: "100%", px: { xs: 2, sm: 4 } }}>
+      <Typography
+        variant="h2"
+        sx={{
+          fontSize: { xs: "2rem", sm: "2.5rem" },
+          fontWeight: 600,
+          textAlign: "center",
+          color: "primary.main",
+          mb: { xs: 4, sm: 6 },
+        }}
+      >
+        Education Journey
+      </Typography>
+
+      <Box
+        sx={{
+          position: "relative",
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            left: "20px",
+            top: 0,
+            bottom: 0,
+            width: "3px",
+            bgcolor: "primary.main",
+            opacity: 0.2,
+          },
+        }}
+      >
+        {education.map((edu, index) => (
+          <Box
+            key={edu.degree}
             sx={{
-              p: { xs: 2, sm: 3, md: 4 },
-              bgcolor: "background.paper",
-              border: "2px solid",
-              borderColor: "primary.main",
-              borderRadius: { xs: 2, sm: 3, md: 4 },
               position: "relative",
-              transition: "all 0.3s ease",
-              "&:hover": {
-                transform: "translateY(-8px)",
-                boxShadow: `0 8px 24px ${theme.palette.primary.main}25`,
-              },
+              mb: index === education.length - 1 ? 0 : 6,
+              ml: "48px",
             }}
           >
-            {/* School Logo */}
+            {/* Timeline Dot */}
             <Box
               sx={{
                 position: "absolute",
-                top: { xs: "-20px", sm: "-30px" },
-                right: { xs: "-20px", sm: "-30px" },
-                bgcolor: "background.paper",
+                left: "-38px",
+                top: "24px",
+                width: "16px",
+                height: "16px",
                 borderRadius: "50%",
-                width: { xs: 60, sm: 80 },
-                height: { xs: 60, sm: 80 },
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "2px solid",
-                borderColor: "primary.main",
-                overflow: "hidden",
-                p: 1,
+                bgcolor: "primary.main",
                 zIndex: 1,
+              }}
+            />
+
+            <Paper
+              sx={{
+                bgcolor: "background.paper",
+                borderRadius: 3,
+                boxShadow: "0 2px 12px rgba(0,0,0,0.1)",
+                overflow: "hidden",
               }}
             >
               <Box
-                component="img"
-                src={edu.logoUrl}
-                alt={`${edu.school} logo`}
                 sx={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "contain",
-                }}
-                onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
-                  e.currentTarget.src = "";
-                  e.currentTarget.style.display = "none";
-                }}
-              />
-            </Box>
-
-            <Box sx={{ pr: { xs: 5, sm: 8 } }}>
-              <Typography
-                variant="h5"
-                color="primary"
-                gutterBottom
-                sx={{
-                  fontSize: { xs: "1.2rem", sm: "1.4rem", md: "1.5rem" },
-                  fontWeight: 500,
+                  p: { xs: 2.5, sm: 3 },
                 }}
               >
-                {edu.school}
-              </Typography>
-              <Typography
-                variant="h6"
-                gutterBottom
-                sx={{
-                  fontSize: { xs: "1rem", sm: "1.1rem", md: "1.25rem" },
-                  fontWeight: 500,
-                  color: "text.primary",
-                }}
-              >
-                {edu.degree}
-              </Typography>
-              <Typography
-                variant="subtitle2"
-                sx={{
-                  color: "text.secondary",
-                  fontSize: { xs: "0.8rem", sm: "0.9rem" },
-                  mb: 2,
-                }}
-              >
-                {edu.period}
-              </Typography>
-
-              <Box sx={{ mt: { xs: 2, sm: 3 } }}>
-                <Typography
-                  variant="subtitle2"
-                  sx={{
-                    color: "text.secondary",
-                    fontSize: { xs: "0.8rem", sm: "0.9rem" },
-                    mb: 1,
-                  }}
-                >
-                  Key Courses:
-                </Typography>
                 <Box
-                  sx={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: { xs: 0.5, sm: 1 },
-                    mt: 1,
-                  }}
+                  sx={{ display: "flex", alignItems: "flex-start", mb: 2.5 }}
                 >
-                  {edu.courses.map((course) => (
-                    <Paper
-                      key={course}
-                      elevation={0}
+                  <Box
+                    sx={{
+                      width: { xs: 50, sm: 60 },
+                      height: { xs: 50, sm: 60 },
+                      borderRadius: 2,
+                      overflow: "hidden",
+                      mr: 2,
+                      border: "1px solid",
+                      borderColor: "divider",
+                      bgcolor: "background.default",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <Box
+                      component="img"
+                      src={edu.logoUrl}
+                      alt={`${edu.school} logo`}
                       sx={{
-                        px: { xs: 1.5, sm: 2 },
-                        py: { xs: 0.5, sm: 1 },
-                        bgcolor: "background.default",
-                        border: "1px solid",
-                        borderColor: "primary.light",
-                        borderRadius: { xs: 1, sm: 2 },
-                        transition: "all 0.3s ease",
-                        "&:hover": {
-                          bgcolor: "primary.main",
-                          color: "white",
-                          transform: "translateY(-2px)",
-                        },
+                        width: "80%",
+                        height: "80%",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </Box>
+
+                  <Box sx={{ flex: 1 }}>
+                    <Typography
+                      variant="h6"
+                      color="primary.main"
+                      sx={{
+                        fontSize: { xs: "1.1rem", sm: "1.25rem" },
+                        fontWeight: 600,
+                        mb: 0.5,
                       }}
                     >
-                      <Typography
-                        variant="body2"
+                      {edu.school}
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: { xs: "0.9rem", sm: "1rem" },
+                        color: "text.primary",
+                        mb: 0.5,
+                      }}
+                    >
+                      {edu.degree}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="primary.main"
+                      sx={{
+                        fontSize: { xs: "0.8rem", sm: "0.875rem" },
+                      }}
+                    >
+                      {edu.period}
+                    </Typography>
+                  </Box>
+                </Box>
+
+                <Box>
+                  <Typography
+                    sx={{
+                      fontSize: { xs: "0.9rem", sm: "1rem" },
+                      fontWeight: 500,
+                      mb: 1.5,
+                      color: "text.primary",
+                    }}
+                  >
+                    Key Courses
+                  </Typography>
+
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: 1,
+                      mx: -0.5,
+                    }}
+                  >
+                    {edu.courses.map((course) => (
+                      <Box
+                        key={course}
                         sx={{
-                          fontSize: { xs: "0.75rem", sm: "0.85rem" },
-                          whiteSpace: "nowrap",
+                          px: 1.5,
+                          py: 0.75,
+                          bgcolor: "background.default",
+                          border: "1px solid",
+                          borderColor: "divider",
+                          borderRadius: 1.5,
+                          fontSize: { xs: "0.8rem", sm: "0.875rem" },
+                          color: "text.primary",
+                          transition: "all 0.2s ease",
+                          "&:hover": {
+                            bgcolor: "primary.main",
+                            color: "white",
+                            borderColor: "primary.main",
+                          },
                         }}
                       >
                         {course}
-                      </Typography>
-                    </Paper>
-                  ))}
+                      </Box>
+                    ))}
+                  </Box>
                 </Box>
               </Box>
-            </Box>
-          </Paper>
-        </Box>
-      ))}
+            </Paper>
+          </Box>
+        ))}
+      </Box>
     </Box>
   );
 };
