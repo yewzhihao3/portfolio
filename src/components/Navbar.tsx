@@ -21,6 +21,7 @@ import PersonIcon from "@mui/icons-material/Person";
 import WorkIcon from "@mui/icons-material/Work";
 import EmailIcon from "@mui/icons-material/Email";
 import MenuIcon from "@mui/icons-material/Menu";
+import TimelineIcon from "@mui/icons-material/Timeline";
 
 interface NavbarProps {
   toggleTheme: () => void;
@@ -36,6 +37,7 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, mode }) => {
   const navItems = [
     { id: "home", label: "Home", icon: <HomeIcon /> },
     { id: "about", label: "About", icon: <PersonIcon /> },
+    { id: "experience", label: "Journey", icon: <TimelineIcon /> },
     { id: "projects", label: "Projects", icon: <WorkIcon /> },
     { id: "contact", label: "Contact", icon: <EmailIcon /> },
   ];
