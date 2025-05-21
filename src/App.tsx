@@ -6,6 +6,7 @@ import Home from "./sections/Home";
 import About from "./sections/About";
 import Projects from "./sections/Projects";
 import Contact from "./sections/Contact";
+import Experience from "./sections/Experience";
 
 const getTheme = (mode: "light" | "dark") =>
   createTheme({
@@ -141,6 +142,9 @@ function App() {
           </section>
           <section id="about">
             <About />
+          </section>
+          <section id="experience">
+            <Experience />
           </section>
           <section id="projects">
             <Projects />
