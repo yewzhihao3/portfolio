@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Container, Typography, Button } from "@mui/material";
+import { Box, Container, Typography, Button, Divider } from "@mui/material";
 import { motion, useScroll, useTransform } from "framer-motion";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { fadeInUp, staggerContainer } from "../utils/animation";
@@ -25,8 +25,25 @@ const Home = () => {
         alignItems: "center",
         position: "relative",
         pt: 8,
+        overflow: "hidden",
       }}
     >
+      {/* Background subtle pattern */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          opacity: 0.03,
+          backgroundImage:
+            "radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)",
+          backgroundSize: "32px 32px",
+          pointerEvents: "none",
+        }}
+      />
+
       <Container maxWidth="lg">
         <Box
           component={motion.div}
@@ -37,74 +54,160 @@ const Home = () => {
           sx={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
-            textAlign: "center",
-            gap: 4,
+            alignItems: "flex-start", // Changed to left alignment for modern look
+            textAlign: "left",
+            gap: 6,
+            position: "relative",
           }}
         >
-          <motion.div variants={fadeInUp}>
-            <Typography
-              variant="h1"
-              component="h1"
-              sx={{
-                fontSize: { xs: "3rem", md: "4.5rem" },
-                fontWeight: 300,
-                mb: 2,
-              }}
-            >
-              Yew Zhi Hao
-            </Typography>
-          </motion.div>
+          <Box sx={{ width: "100%", mb: 4 }}>
+            <motion.div variants={fadeInUp}>
+              <Typography
+                variant="h1"
+                component="h1"
+                sx={{
+                  fontSize: { xs: "2.5rem", sm: "3.5rem", md: "5rem" },
+                  fontWeight: 200,
+                  letterSpacing: "-0.02em",
+                  mb: 3,
+                }}
+              >
+                Yew Zhi Hao
+              </Typography>
+            </motion.div>
 
-          <motion.div variants={fadeInUp}>
-            <Typography
-              variant="h2"
-              color="primary"
-              sx={{
-                fontSize: { xs: "1.5rem", md: "2rem" },
-                fontWeight: 300,
-                mb: 4,
-              }}
-            >
-              Software Developer
-            </Typography>
-          </motion.div>
+            <motion.div variants={fadeInUp}>
+              <Typography
+                variant="h2"
+                color="primary"
+                sx={{
+                  fontSize: { xs: "1.25rem", sm: "1.5rem", md: "2rem" },
+                  fontWeight: 300,
+                  letterSpacing: "0.02em",
+                  opacity: 0.9,
+                }}
+              >
+                Software Developer
+              </Typography>
+            </motion.div>
+          </Box>
 
-          <motion.div variants={fadeInUp}>
+          <Box
+            component={motion.div}
+            variants={fadeInUp}
+            sx={{
+              width: "100%",
+              maxWidth: "800px",
+              position: "relative",
+              my: 4,
+            }}
+          >
+            <Divider sx={{ width: "40px", mb: 4 }} />
             <Typography
               variant="h5"
-              color="text.secondary"
               sx={{
-                maxWidth: "800px",
-                mb: 6,
                 fontWeight: 300,
+                lineHeight: 1.8,
+                color: "text.secondary",
+                fontSize: { xs: "1rem", sm: "1.1rem", md: "1.25rem" },
+                maxWidth: "600px",
               }}
             >
-              Passionate about creating elegant solutions through code.
-              Specializing in web development and software engineering.
+              I believe in the art of efficient development — where strategic
+              automation meets innovative problem-solving. Every line of code is
+              an opportunity to create lasting impact through elegant solutions.
             </Typography>
-          </motion.div>
+          </Box>
 
-          <motion.div variants={fadeInUp}>
+          <Box
+            component={motion.div}
+            variants={fadeInUp}
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", sm: "row" },
+              gap: 3,
+              mt: 2,
+            }}
+          >
             <Button
-              variant="outlined"
+              variant="contained"
               color="primary"
               size="large"
               onClick={() => scrollToSection("about")}
-              endIcon={<KeyboardArrowDownIcon />}
               sx={{
                 borderRadius: 2,
                 px: 4,
-                py: 1.5,
-                borderWidth: 2,
+                py: 2,
+                textTransform: "none",
+                fontSize: "1.1rem",
+                fontWeight: 400,
+                letterSpacing: "0.5px",
+                boxShadow: "none",
                 "&:hover": {
-                  borderWidth: 2,
+                  boxShadow: "none",
                 },
               }}
             >
               Explore My Work
             </Button>
-          </motion.div>
+            <Button
+              variant="outlined"
+              color="primary"
+              size="large"
+              onClick={() => scrollToSection("contact")}
+              sx={{
+                borderRadius: 2,
+                px: 4,
+                py: 2,
+                textTransform: "none",
+                fontSize: "1.1rem",
+                fontWeight: 400,
+                letterSpacing: "0.5px",
+                borderWidth: 1.5,
+                "&:hover": {
+                  borderWidth: 1.5,
+                },
+              }}
+            >
+              Get in Touch
+            </Button>
+          </Box>
+
+          {/* Scroll indicator */}
+          <Box
+            component={motion.div}
+            animate={{
+              y: [0, 10, 0],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            sx={{
+              position: "absolute",
+              bottom: { xs: -100, md: -120 },
+              left: "50%",
+              transform: "translateX(-50%)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 1,
+              opacity: 0.6,
+            }}
+          >
+            <Typography
+              variant="caption"
+              sx={{
+                textTransform: "uppercase",
+                letterSpacing: "0.2em",
+                fontSize: "0.75rem",
+              }}
+            >
+              Scroll
+            </Typography>
+            <KeyboardArrowDownIcon />
+          </Box>
         </Box>
       </Container>
     </Box>
