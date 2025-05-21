@@ -2,7 +2,6 @@ import React from "react";
 import { Box, Container, Typography, Button, Divider } from "@mui/material";
 import { motion, useScroll, useTransform } from "framer-motion";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { fadeInUp, staggerContainer } from "../utils/animation";
 
 const Home = () => {
   const { scrollY } = useScroll();
@@ -46,55 +45,44 @@ const Home = () => {
 
       <Container maxWidth="lg">
         <Box
-          component={motion.div}
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
           sx={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "flex-start", // Changed to left alignment for modern look
+            alignItems: "flex-start",
             textAlign: "left",
             gap: 6,
             position: "relative",
           }}
         >
           <Box sx={{ width: "100%", mb: 4 }}>
-            <motion.div variants={fadeInUp}>
-              <Typography
-                variant="h1"
-                component="h1"
-                sx={{
-                  fontSize: { xs: "2.5rem", sm: "3.5rem", md: "5rem" },
-                  fontWeight: 200,
-                  letterSpacing: "-0.02em",
-                  mb: 3,
-                }}
-              >
-                Yew Zhi Hao
-              </Typography>
-            </motion.div>
+            <Typography
+              variant="h1"
+              component="h1"
+              sx={{
+                fontSize: { xs: "2.5rem", sm: "3.5rem", md: "5rem" },
+                fontWeight: 200,
+                letterSpacing: "-0.02em",
+                mb: 3,
+              }}
+            >
+              Yew Zhi Hao
+            </Typography>
 
-            <motion.div variants={fadeInUp}>
-              <Typography
-                variant="h2"
-                color="primary"
-                sx={{
-                  fontSize: { xs: "1.25rem", sm: "1.5rem", md: "2rem" },
-                  fontWeight: 300,
-                  letterSpacing: "0.02em",
-                  opacity: 0.9,
-                }}
-              >
-                Software Developer
-              </Typography>
-            </motion.div>
+            <Typography
+              variant="h2"
+              color="primary"
+              sx={{
+                fontSize: { xs: "1.25rem", sm: "1.5rem", md: "2rem" },
+                fontWeight: 300,
+                letterSpacing: "0.02em",
+                opacity: 0.9,
+              }}
+            >
+              Software Developer
+            </Typography>
           </Box>
 
           <Box
-            component={motion.div}
-            variants={fadeInUp}
             sx={{
               width: "100%",
               maxWidth: "800px",
@@ -120,8 +108,6 @@ const Home = () => {
           </Box>
 
           <Box
-            component={motion.div}
-            variants={fadeInUp}
             sx={{
               display: "flex",
               flexDirection: { xs: "column", sm: "row" },

@@ -1,10 +1,8 @@
 import React from "react";
 import { Container, Typography, Box, Paper } from "@mui/material";
-import { motion } from "framer-motion";
 import EducationTimeline from "../components/EducationTimeline";
 import Skills from "../components/Skills";
 import { SCHOOL_LOGOS } from "../utils/types";
-import { fadeInUp, staggerContainer, scaleIn } from "../utils/animation";
 
 const About = () => {
   const education = [
@@ -38,81 +36,68 @@ const About = () => {
   ];
 
   return (
-    <Box
-      component={motion.div}
-      variants={staggerContainer}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      sx={{ py: 8, minHeight: "90vh" }}
-    >
+    <Box sx={{ py: 8, minHeight: "90vh" }}>
       <Container maxWidth="lg">
-        <motion.div variants={fadeInUp}>
-          <Typography
-            variant="h2"
-            component="h2"
-            gutterBottom
-            align="center"
-            sx={{
-              fontWeight: 300,
-              mb: 6,
-              "&::after": {
-                content: '""',
-                display: "block",
-                width: "60px",
-                height: "3px",
-                bgcolor: "primary.main",
-                margin: "20px auto 0",
-              },
-            }}
-          >
-            About Me
-          </Typography>
-        </motion.div>
+        <Typography
+          variant="h2"
+          component="h2"
+          gutterBottom
+          align="center"
+          sx={{
+            fontWeight: 300,
+            mb: 6,
+            "&::after": {
+              content: '""',
+              display: "block",
+              width: "60px",
+              height: "3px",
+              bgcolor: "primary.main",
+              margin: "20px auto 0",
+            },
+          }}
+        >
+          About Me
+        </Typography>
 
         <Box sx={{ display: "flex", flexDirection: "column", gap: 6 }}>
-          <motion.div variants={scaleIn}>
-            <Paper
-              elevation={0}
+          <Paper
+            elevation={0}
+            sx={{
+              p: 4,
+              bgcolor: "background.paper",
+              borderRadius: 2,
+              border: "1px solid",
+              borderColor: "divider",
+            }}
+          >
+            <Typography
+              variant="h4"
+              gutterBottom
               sx={{
-                p: 4,
-                bgcolor: "background.paper",
-                borderRadius: 2,
-                border: "1px solid",
-                borderColor: "divider",
+                fontWeight: 500,
+                mx: 4,
+                textAlign: "center",
+                color: "primary.main",
               }}
             >
-              <Typography
-                variant="h4"
-                gutterBottom
-                sx={{
-                  fontWeight: 500,
-                  mx: 4,
-                  textAlign: "center",
-                  color: "primary.main",
-                }}
-              >
-                Education Journey
-              </Typography>
+              Education Journey
+            </Typography>
 
-              <EducationTimeline education={education} />
-            </Paper>
-          </motion.div>
+            <EducationTimeline education={education} />
+          </Paper>
 
-          <motion.div variants={scaleIn}>
-            <Paper
-              elevation={0}
-              sx={{
-                p: 4,
-                bgcolor: "background.paper",
-                borderRadius: 2,
-                border: "1px solid",
-                borderColor: "divider",
-              }}
-            >
-              <Skills />
-            </Paper>
-          </motion.div>
+          <Paper
+            elevation={0}
+            sx={{
+              p: 4,
+              bgcolor: "background.paper",
+              borderRadius: 2,
+              border: "1px solid",
+              borderColor: "divider",
+            }}
+          >
+            <Skills />
+          </Paper>
         </Box>
       </Container>
     </Box>

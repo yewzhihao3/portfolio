@@ -7,6 +7,7 @@ import About from "./sections/About";
 import Projects from "./sections/Projects";
 import Contact from "./sections/Contact";
 import Experience from "./sections/Experience";
+import { motion, AnimatePresence } from "framer-motion";
 
 const getTheme = (mode: "light" | "dark") =>
   createTheme({
@@ -115,6 +116,39 @@ const getTheme = (mode: "light" | "dark") =>
     },
   });
 
+// Animation variants for sections
+const pageVariants = {
+  hidden: {
+    opacity: 0,
+    y: 20,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+      when: "beforeChildren",
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const sectionVariants = {
+  hidden: {
+    opacity: 0,
+    y: 30,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut",
+    },
+  },
+};
+
 function App() {
   const [mode, setMode] = useState<"light" | "dark">("light");
   const theme = getTheme(mode);
@@ -127,6 +161,10 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box
+        component={motion.div}
+        variants={pageVariants}
+        initial="hidden"
+        animate="visible"
         sx={{
           minHeight: "100vh",
           background:
@@ -136,23 +174,59 @@ function App() {
         }}
       >
         <Navbar toggleTheme={toggleTheme} mode={mode} />
-        <Box component="main">
-          <section id="home">
-            <Home />
-          </section>
-          <section id="about">
-            <About />
-          </section>
-          <section id="experience">
-            <Experience />
-          </section>
-          <section id="projects">
-            <Projects />
-          </section>
-          <section id="contact">
-            <Contact />
-          </section>
-        </Box>
+        <AnimatePresence>
+          <Box component="main">
+            <motion.section
+              id="home"
+              variants={sectionVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <Home />
+            </motion.section>
+
+            <motion.section
+              id="about"
+              variants={sectionVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <About />
+            </motion.section>
+
+            <motion.section
+              id="experience"
+              variants={sectionVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <Experience />
+            </motion.section>
+
+            <motion.section
+              id="projects"
+              variants={sectionVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <Projects />
+            </motion.section>
+
+            <motion.section
+              id="contact"
+              variants={sectionVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <Contact />
+            </motion.section>
+          </Box>
+        </AnimatePresence>
       </Box>
     </ThemeProvider>
   );

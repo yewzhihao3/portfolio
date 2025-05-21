@@ -11,11 +11,9 @@ import {
   IconButton,
   CardMedia,
 } from "@mui/material";
-import { motion } from "framer-motion";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { fadeInUp, staggerContainer, scaleIn } from "../utils/animation";
 
 const Projects = () => {
   const theme = useTheme();
@@ -157,41 +155,32 @@ const Projects = () => {
   }, []);
 
   return (
-    <Box
-      component={motion.div}
-      variants={staggerContainer}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-      sx={{ py: 12, minHeight: "100vh", bgcolor: "background.default" }}
-    >
+    <Box sx={{ py: 12, minHeight: "100vh", bgcolor: "background.default" }}>
       <Container
         maxWidth="lg"
         sx={{
           px: { xs: 2, sm: 3, md: 4 },
         }}
       >
-        <motion.div variants={fadeInUp}>
-          <Typography
-            variant="h2"
-            component="h2"
-            align="center"
-            sx={{
-              fontWeight: 300,
-              mb: 8,
-              "&::after": {
-                content: '""',
-                display: "block",
-                width: "60px",
-                height: "3px",
-                bgcolor: "primary.main",
-                margin: "20px auto 0",
-              },
-            }}
-          >
-            My Projects
-          </Typography>
-        </motion.div>
+        <Typography
+          variant="h2"
+          component="h2"
+          align="center"
+          sx={{
+            fontWeight: 300,
+            mb: 8,
+            "&::after": {
+              content: '""',
+              display: "block",
+              width: "60px",
+              height: "3px",
+              bgcolor: "primary.main",
+              margin: "20px auto 0",
+            },
+          }}
+        >
+          My Projects
+        </Typography>
 
         <Box sx={{ position: "relative" }}>
           {/* Left Arrow */}
@@ -277,163 +266,153 @@ const Projects = () => {
                 sx={{
                   minWidth: "100%",
                   scrollSnapAlign: "start",
+                  padding: "0 4px",
                 }}
               >
-                <motion.div
-                  variants={scaleIn}
-                  style={{
+                <Paper
+                  elevation={0}
+                  sx={{
                     width: "100%",
-                    height: "100%",
                     display: "flex",
-                    padding: "0 4px", // Small padding to prevent box-shadow cut-off
+                    flexDirection: "column",
+                    bgcolor: "background.paper",
+                    border: "1px solid",
+                    borderColor: "divider",
+                    borderRadius: 3,
+                    overflow: "hidden",
+                    position: "relative",
+                    transition: "all 0.3s ease",
+                    "&:hover": {
+                      transform: "translateY(-8px)",
+                      boxShadow: theme.shadows[4],
+                      "& .project-number": {
+                        color: "primary.main",
+                      },
+                    },
                   }}
                 >
-                  <Paper
-                    elevation={0}
+                  <CardMedia
+                    component="img"
+                    height="400"
+                    image={project.image}
+                    alt={project.title}
                     sx={{
-                      width: "100%",
-                      display: "flex",
-                      flexDirection: "column",
-                      bgcolor: "background.paper",
-                      border: "1px solid",
-                      borderColor: "divider",
-                      borderRadius: 3,
-                      overflow: "hidden",
-                      position: "relative",
-                      transition: "all 0.3s ease",
+                      objectFit: "contain",
+                      bgcolor: "background.default",
+                      p: 2,
+                      height: { xs: "250px", sm: "300px", md: "400px" },
                       "&:hover": {
-                        transform: "translateY(-8px)",
-                        boxShadow: theme.shadows[4],
-                        "& .project-number": {
-                          color: "primary.main",
-                        },
+                        transform: "scale(1.02)",
+                        transition: "transform 0.3s ease-in-out",
                       },
                     }}
+                  />
+                  <Box
+                    className="project-number"
+                    sx={{
+                      position: "absolute",
+                      top: { xs: 16, md: 32 },
+                      right: { xs: 16, md: 32 },
+                      fontSize: { xs: "4rem", sm: "5rem", md: "6rem" },
+                      fontWeight: 700,
+                      opacity: 0.06,
+                      lineHeight: 1,
+                      transition: "color 0.3s ease",
+                      color: "#fff",
+                      zIndex: 1,
+                    }}
                   >
-                    <CardMedia
-                      component="img"
-                      height="400"
-                      image={project.image}
-                      alt={project.title}
+                    {String(index + 1).padStart(2, "0")}
+                  </Box>
+                  <CardContent
+                    sx={{
+                      p: { xs: 3, sm: 4, md: 5 },
+                      pb: { xs: 2, sm: 2.5, md: 3 },
+                      flexGrow: 1,
+                    }}
+                  >
+                    <Typography
+                      variant="h4"
+                      component="h3"
                       sx={{
-                        objectFit: "contain",
-                        bgcolor: "background.default",
-                        p: 2,
-                        height: { xs: "250px", sm: "300px", md: "400px" },
-                        "&:hover": {
-                          transform: "scale(1.02)",
-                          transition: "transform 0.3s ease-in-out",
+                        fontWeight: 600,
+                        fontSize: {
+                          xs: "1.5rem",
+                          sm: "1.75rem",
+                          md: "2.25rem",
                         },
+                        lineHeight: 1.2,
+                        mb: 2,
                       }}
-                    />
+                    >
+                      {project.title}
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      color="text.secondary"
+                      sx={{
+                        lineHeight: 1.8,
+                        fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
+                        mb: 3,
+                      }}
+                    >
+                      {project.description}
+                    </Typography>
                     <Box
-                      className="project-number"
                       sx={{
-                        position: "absolute",
-                        top: { xs: 16, md: 32 },
-                        right: { xs: 16, md: 32 },
-                        fontSize: { xs: "4rem", sm: "5rem", md: "6rem" },
-                        fontWeight: 700,
-                        opacity: 0.06,
-                        lineHeight: 1,
-                        transition: "color 0.3s ease",
-                        color: "#fff",
-                        zIndex: 1,
-                      }}
-                    >
-                      {String(index + 1).padStart(2, "0")}
-                    </Box>
-                    <CardContent
-                      sx={{
-                        p: { xs: 3, sm: 4, md: 5 },
-                        pb: { xs: 2, sm: 2.5, md: 3 },
-                        flexGrow: 1,
                         display: "flex",
-                        flexDirection: "column",
-                        gap: { xs: 2, sm: 3, md: 4 },
+                        flexWrap: "wrap",
+                        gap: { xs: 1, sm: 1.5, md: 2 },
+                        mt: 3,
                       }}
                     >
-                      <Typography
-                        variant="h4"
-                        component="h3"
-                        sx={{
-                          fontWeight: 600,
-                          fontSize: {
-                            xs: "1.5rem",
-                            sm: "1.75rem",
-                            md: "2.25rem",
-                          },
-                          lineHeight: 1.2,
-                        }}
-                      >
-                        {project.title}
-                      </Typography>
-                      <Typography
-                        variant="body1"
-                        color="text.secondary"
-                        sx={{
-                          lineHeight: 1.8,
-                          fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
-                        }}
-                      >
-                        {project.description}
-                      </Typography>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexWrap: "wrap",
-                          gap: { xs: 1, sm: 1.5, md: 2 },
-                          mt: "auto",
-                        }}
-                      >
-                        {project.technologies.map((tech) => (
-                          <Typography
-                            key={tech}
-                            variant="body2"
-                            sx={{
-                              px: { xs: 1.5, sm: 2, md: 2.5 },
-                              py: { xs: 0.5, sm: 0.75, md: 1 },
-                              bgcolor: "background.default",
-                              borderRadius: 2,
-                              color: "primary.main",
-                              fontWeight: 500,
-                              fontSize: {
-                                xs: "0.8rem",
-                                sm: "0.85rem",
-                                md: "0.95rem",
-                              },
-                            }}
-                          >
-                            {tech}
-                          </Typography>
-                        ))}
-                      </Box>
-                    </CardContent>
-                    <CardActions
+                      {project.technologies.map((tech, idx) => (
+                        <Typography
+                          key={idx}
+                          variant="body2"
+                          sx={{
+                            px: { xs: 1.5, sm: 2, md: 2.5 },
+                            py: { xs: 0.5, sm: 0.75, md: 1 },
+                            bgcolor: "background.default",
+                            borderRadius: 2,
+                            color: "primary.main",
+                            fontWeight: 500,
+                            fontSize: {
+                              xs: "0.8rem",
+                              sm: "0.85rem",
+                              md: "0.95rem",
+                            },
+                          }}
+                        >
+                          {tech}
+                        </Typography>
+                      ))}
+                    </Box>
+                  </CardContent>
+                  <CardActions
+                    sx={{
+                      p: { xs: 3, sm: 4, md: 5 },
+                      pt: { xs: 2, sm: 2.5, md: 3 },
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      startIcon={<GitHubIcon />}
+                      href={project.github}
+                      target="_blank"
+                      fullWidth
                       sx={{
-                        p: { xs: 3, sm: 4, md: 5 },
-                        pt: { xs: 2, sm: 2.5, md: 3 },
+                        borderRadius: 2,
+                        textTransform: "none",
+                        py: { xs: 1.5, md: 2 },
+                        fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
                       }}
                     >
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        startIcon={<GitHubIcon />}
-                        href={project.github}
-                        target="_blank"
-                        fullWidth
-                        sx={{
-                          borderRadius: 2,
-                          textTransform: "none",
-                          py: { xs: 1.5, md: 2 },
-                          fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
-                        }}
-                      >
-                        View on GitHub
-                      </Button>
-                    </CardActions>
-                  </Paper>
-                </motion.div>
+                      View on GitHub
+                    </Button>
+                  </CardActions>
+                </Paper>
               </Box>
             ))}
           </Box>

@@ -8,13 +8,11 @@ import {
   IconButton,
   Snackbar,
 } from "@mui/material";
-import { motion } from "framer-motion";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import { fadeInUp, staggerContainer, slideIn } from "../utils/animation";
 
 const Contact = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -59,11 +57,6 @@ const Contact = () => {
 
   return (
     <Box
-      component={motion.div}
-      variants={staggerContainer}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
       sx={{
         py: 12,
         minHeight: "100vh",
@@ -72,47 +65,43 @@ const Contact = () => {
       }}
     >
       <Container maxWidth="xl">
-        <motion.div variants={fadeInUp}>
-          <Typography
-            variant="h2"
-            component="h2"
-            align="center"
-            sx={{
-              fontWeight: 300,
-              mb: 6,
-              color: "text.primary",
-              "&::after": {
-                content: '""',
-                display: "block",
-                width: "40px",
-                height: "2px",
-                bgcolor: "primary.main",
-                margin: "20px auto 0",
-                opacity: 0.7,
-              },
-            }}
-          >
-            Get in Touch
-          </Typography>
-        </motion.div>
+        <Typography
+          variant="h2"
+          component="h2"
+          align="center"
+          sx={{
+            fontWeight: 300,
+            mb: 6,
+            color: "text.primary",
+            "&::after": {
+              content: '""',
+              display: "block",
+              width: "40px",
+              height: "2px",
+              bgcolor: "primary.main",
+              margin: "20px auto 0",
+              opacity: 0.7,
+            },
+          }}
+        >
+          Get in Touch
+        </Typography>
 
-        <motion.div variants={fadeInUp}>
-          <Typography
-            variant="h6"
-            align="center"
-            color="text.secondary"
-            sx={{
-              mb: 8,
-              maxWidth: "800px",
-              mx: "auto",
-              fontWeight: 300,
-              lineHeight: 1.8,
-            }}
-          >
-            I'm always open to new opportunities and collaborations. Feel free
-            to reach out through any of the following channels.
-          </Typography>
-        </motion.div>
+        <Typography
+          variant="h6"
+          align="center"
+          color="text.secondary"
+          sx={{
+            mb: 8,
+            maxWidth: "800px",
+            mx: "auto",
+            fontWeight: 300,
+            lineHeight: 1.8,
+          }}
+        >
+          I'm always open to new opportunities and collaborations. Feel free to
+          reach out through any of the following channels.
+        </Typography>
 
         <Box
           sx={{
@@ -122,145 +111,76 @@ const Contact = () => {
               sm: "repeat(2, 1fr)",
               md: "repeat(4, 1fr)",
             },
-            gap: { xs: 2, sm: 3, md: 4 },
-            maxWidth: "1600px",
+            gap: 3,
+            maxWidth: "1200px",
             mx: "auto",
-            px: { xs: 1, sm: 2, md: 4 },
           }}
         >
           {contactInfo.map((info, index) => (
-            <motion.div
-              key={info.label}
-              variants={slideIn}
-              style={{ width: "100%" }}
+            <Paper
+              key={index}
+              elevation={0}
+              sx={{
+                p: 3,
+                bgcolor: "background.paper",
+                borderRadius: 2,
+                border: "1px solid",
+                borderColor: "divider",
+                transition: "transform 0.3s ease-in-out",
+                "&:hover": {
+                  transform: "translateY(-4px)",
+                },
+              }}
             >
-              <Paper
-                elevation={0}
+              <Box
                 sx={{
-                  p: { xs: 2, sm: 2.5, md: 3 },
-                  height: "100%",
-                  width: "100%",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
                   textAlign: "center",
-                  bgcolor: "background.paper",
-                  borderRadius: { xs: 2, sm: 3, md: 4 },
-                  transition: "all 0.3s ease",
-                  boxShadow: "0 4px 24px rgba(0,0,0,0.05)",
-                  "&:hover": {
-                    transform: {
-                      xs: "translateY(-2px)",
-                      md: "translateY(-4px)",
-                    },
-                    boxShadow: "0 8px 32px rgba(147,51,234,0.15)",
-                  },
+                  gap: 2,
                 }}
               >
-                <Box
-                  sx={{
-                    mb: { xs: 1, sm: 1.5, md: 2 },
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <IconButton
-                    sx={{
-                      transform: { xs: "scale(1)", md: "scale(1.1)" },
-                      transition: "all 0.3s ease",
-                      background: "rgba(147,51,234,0.05)",
-                      "&:hover": {
-                        transform: { xs: "scale(1.1)", md: "scale(1.2)" },
-                        background: "rgba(147,51,234,0.1)",
-                      },
-                      color: "primary.main",
-                      "&.Mui-disabled": {
-                        color: "primary.main",
-                      },
-                      p: { xs: 1.5, sm: 1.75, md: 2 },
-                    }}
-                    component={info.link ? Link : "button"}
-                    href={info.link || undefined}
-                    target={info.link ? "_blank" : undefined}
-                    disabled={!info.link}
-                  >
-                    {info.icon}
-                  </IconButton>
-                </Box>
+                {info.icon}
                 <Typography
                   variant="h6"
-                  gutterBottom
-                  sx={{
-                    fontWeight: 500,
-                    mb: { xs: 0.5, sm: 0.75, md: 1 },
-                    fontSize: { xs: "0.85rem", sm: "0.9rem", md: "1rem" },
-                    letterSpacing: "0.5px",
-                  }}
+                  sx={{ fontWeight: 500, color: "primary.main" }}
                 >
                   {info.label}
                 </Typography>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: { xs: 0.5, sm: 0.75, md: 1 },
-                    minHeight: { xs: "20px", sm: "22px", md: "24px" },
-                    width: "100%",
-                  }}
-                >
-                  <Typography
-                    component={info.link ? Link : "div"}
-                    href={info.link || undefined}
-                    target={info.link ? "_blank" : undefined}
-                    color="text.secondary"
+                {info.link ? (
+                  <Link
+                    href={info.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     sx={{
+                      color: "text.primary",
                       textDecoration: "none",
-                      fontSize: { xs: "0.75rem", sm: "0.8rem", md: "0.9rem" },
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      transition: "color 0.3s ease",
-                      "&:hover": {
-                        color: info.link ? "primary.main" : "inherit",
-                        cursor: info.link ? "pointer" : "default",
-                      },
+                      "&:hover": { color: "primary.main" },
                     }}
                   >
+                    <Typography variant="body1">{info.value}</Typography>
+                  </Link>
+                ) : (
+                  <Typography variant="body1" color="text.primary">
                     {info.value}
                   </Typography>
-                  {info.copyable && (
-                    <IconButton
-                      size="small"
-                      onClick={() => handleCopy(info.value, info.label)}
-                      sx={{
-                        color: "primary.main",
-                        opacity: 0.8,
-                        flexShrink: 0,
-                        padding: { xs: 0.5, sm: 0.75, md: 1 },
-                        transition: "all 0.3s ease",
-                        "&:hover": {
-                          opacity: 1,
-                          transform: "scale(1.1)",
-                          background: "rgba(147,51,234,0.1)",
-                        },
-                      }}
-                    >
-                      <ContentCopyIcon
-                        sx={{
-                          fontSize: {
-                            xs: "0.9rem",
-                            sm: "1rem",
-                            md: "1.1rem",
-                          },
-                        }}
-                      />
-                    </IconButton>
-                  )}
-                </Box>
-              </Paper>
-            </motion.div>
+                )}
+                {info.copyable && (
+                  <IconButton
+                    onClick={() => handleCopy(info.value, info.label)}
+                    size="small"
+                    sx={{
+                      mt: 1,
+                      color: "text.secondary",
+                      "&:hover": { color: "primary.main" },
+                    }}
+                  >
+                    <ContentCopyIcon />
+                  </IconButton>
+                )}
+              </Box>
+            </Paper>
           ))}
         </Box>
 
@@ -269,17 +189,7 @@ const Contact = () => {
           autoHideDuration={3000}
           onClose={() => setSnackbarOpen(false)}
           message={snackbarMessage}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "center",
-          }}
-          sx={{
-            "& .MuiSnackbarContent-root": {
-              fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
-              py: { xs: 1, sm: 1.5 },
-              px: { xs: 2, sm: 3 },
-            },
-          }}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
         />
       </Container>
     </Box>
