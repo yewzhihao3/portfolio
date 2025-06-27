@@ -1,4 +1,5 @@
 import React from "react";
+import { Box } from "@mui/material";
 import JobExperience from "../components/JobExperience";
 
 const Experience = () => {
@@ -47,7 +48,11 @@ const Experience = () => {
     },
   ];
 
-  return <JobExperience experiences={experiences} />;
+  return (
+    <Box sx={{ bgcolor: "background.default" }}>
+      <JobExperience experiences={experiences} />
+    </Box>
+  );
 };
 
 export default Experience;

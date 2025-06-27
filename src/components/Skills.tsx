@@ -1,9 +1,12 @@
 import React from "react";
-import { Typography, Box, Paper, Rating } from "@mui/material";
+import { Typography, Box, Paper, Rating, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import { SkillCategory, Language } from "../utils/types";
+import { colors } from "../theme/colors";
 
 const Skills = () => {
+  const theme = useTheme();
+
   const technicalSkills: SkillCategory[] = [
     {
       name: "Proficient",
@@ -100,7 +103,10 @@ const Skills = () => {
                         "&:hover": {
                           borderColor: "primary.main",
                           transform: "translateY(-2px)",
-                          boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
+                          boxShadow:
+                            theme.palette.mode === "dark"
+                              ? `0 4px 20px ${colors.shadow.dark}`
+                              : `0 4px 20px ${colors.shadow.light}`,
                         },
                       }}
                     >

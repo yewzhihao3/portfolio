@@ -1,12 +1,15 @@
 import React from "react";
-import { Box, Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography, useTheme } from "@mui/material";
 import { Education } from "../utils/types";
+import { colors } from "../theme/colors";
 
 interface EducationTimelineProps {
   education: Education[];
 }
 
 const EducationTimeline: React.FC<EducationTimelineProps> = ({ education }) => {
+  const theme = useTheme();
+
   return (
     <Box sx={{ width: "100%", px: { xs: 2, sm: 4 } }}>
       <Typography
@@ -64,7 +67,10 @@ const EducationTimeline: React.FC<EducationTimelineProps> = ({ education }) => {
               sx={{
                 bgcolor: "background.paper",
                 borderRadius: 3,
-                boxShadow: "0 2px 12px rgba(0,0,0,0.1)",
+                boxShadow:
+                  theme.palette.mode === "dark"
+                    ? `0 2px 12px ${colors.shadow.dark}`
+                    : `0 2px 12px ${colors.shadow.light}`,
                 overflow: "hidden",
               }}
             >

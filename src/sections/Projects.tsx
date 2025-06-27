@@ -14,6 +14,7 @@ import {
 import GitHubIcon from "@mui/icons-material/GitHub";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { colors } from "../theme/colors";
 
 const Projects = () => {
   const theme = useTheme();
@@ -333,14 +334,14 @@ const Projects = () => {
                         py: { xs: 0.5, md: 0.75 },
                         bgcolor:
                           theme.palette.mode === "dark"
-                            ? "rgba(0, 0, 0, 0.7)"
-                            : "rgba(255, 255, 255, 0.95)",
+                            ? colors.overlay.background.dark
+                            : colors.overlay.background.light,
                         backdropFilter: "blur(10px)",
                         borderRadius: 2,
                         border:
                           theme.palette.mode === "dark"
-                            ? "1px solid rgba(255, 255, 255, 0.1)"
-                            : "1px solid rgba(255, 255, 255, 0.2)",
+                            ? `1px solid ${colors.overlay.border.dark}`
+                            : `1px solid ${colors.overlay.border.light}`,
                         boxShadow:
                           theme.palette.mode === "dark"
                             ? "0 4px 12px rgba(0, 0, 0, 0.3)"
@@ -355,8 +356,8 @@ const Projects = () => {
                           fontSize: { xs: "0.75rem", md: "0.85rem" },
                           color:
                             theme.palette.mode === "dark"
-                              ? "rgba(255, 255, 255, 0.9)"
-                              : "text.primary",
+                              ? colors.overlay.text.dark
+                              : colors.overlay.text.light,
                           letterSpacing: "0.5px",
                         }}
                       >

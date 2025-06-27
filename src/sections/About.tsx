@@ -44,7 +44,7 @@ const About = () => {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
-      sx={{ py: 8, minHeight: "90vh" }}
+      sx={{ py: 8, minHeight: "90vh", bgcolor: "background.default" }}
     >
       <Container maxWidth="lg">
         <motion.div variants={fadeInUp}>

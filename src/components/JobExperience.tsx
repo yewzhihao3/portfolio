@@ -9,6 +9,7 @@ import {
   useTheme,
 } from "@mui/material";
 import WorkIcon from "@mui/icons-material/Work";
+import { colors } from "../theme/colors";
 
 interface JobExperienceProps {
   title: string;
@@ -35,8 +36,8 @@ const JobExperience: React.FC<{ experiences: JobExperienceProps[] }> = ({
           fontWeight: "bold",
           background:
             theme.palette.mode === "dark"
-              ? "linear-gradient(45deg, #ba68c8 30%, #9c27b0 90%)"
-              : "linear-gradient(45deg, #7b1fa2 30%, #9c27b0 90%)",
+              ? `linear-gradient(45deg, ${colors.primary.light} 30%, ${colors.primary.main} 90%)`
+              : `linear-gradient(45deg, ${colors.primary.dark} 30%, ${colors.primary.main} 90%)`,
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
         }}
@@ -56,10 +57,10 @@ const JobExperience: React.FC<{ experiences: JobExperienceProps[] }> = ({
                 transform: "translateY(-4px)",
                 boxShadow:
                   theme.palette.mode === "dark"
-                    ? "0 8px 24px rgba(0,0,0,0.3)"
-                    : "0 8px 24px rgba(0,0,0,0.1)",
+                    ? `0 8px 24px ${colors.shadow.dark}`
+                    : `0 8px 24px ${colors.shadow.light}`,
               },
-              bgcolor: theme.palette.background.paper,
+              bgcolor: "background.paper",
             }}
           >
             <CardContent sx={{ p: 4 }}>
@@ -99,7 +100,7 @@ const JobExperience: React.FC<{ experiences: JobExperienceProps[] }> = ({
                   sx={{
                     mb: 2,
                     lineHeight: 1.7,
-                    color: theme.palette.text.secondary,
+                    color: "text.secondary",
                   }}
                 >
                   {desc}

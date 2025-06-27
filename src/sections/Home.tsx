@@ -25,6 +25,7 @@ const Home = () => {
         position: "relative",
         pt: 8,
         overflow: "hidden",
+        bgcolor: "background.default",
       }}
     >
       {/* Background subtle pattern */}

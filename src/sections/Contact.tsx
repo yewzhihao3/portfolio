@@ -62,6 +62,7 @@ const Contact = () => {
         minHeight: "100vh",
         display: "flex",
         alignItems: "center",
+        bgcolor: "background.default",
       }}
     >
       <Container maxWidth="xl">
