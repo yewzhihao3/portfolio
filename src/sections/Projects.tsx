@@ -305,22 +305,65 @@ const Projects = () => {
                     },
                   }}
                 >
-                  <CardMedia
-                    component="img"
-                    height="400"
-                    image={project.image}
-                    alt={project.title}
-                    sx={{
-                      objectFit: "contain",
-                      bgcolor: "background.default",
-                      p: 2,
-                      height: { xs: "250px", sm: "300px", md: "400px" },
-                      "&:hover": {
-                        transform: "scale(1.02)",
-                        transition: "transform 0.3s ease-in-out",
-                      },
-                    }}
-                  />
+                  {/* Image Container with Date Badge */}
+                  <Box sx={{ position: "relative" }}>
+                    <CardMedia
+                      component="img"
+                      height="400"
+                      image={project.image}
+                      alt={project.title}
+                      sx={{
+                        objectFit: "contain",
+                        bgcolor: "background.default",
+                        p: 2,
+                        height: { xs: "250px", sm: "300px", md: "400px" },
+                        "&:hover": {
+                          transform: "scale(1.02)",
+                          transition: "transform 0.3s ease-in-out",
+                        },
+                      }}
+                    />
+                    {/* Date Badge */}
+                    <Box
+                      sx={{
+                        position: "absolute",
+                        top: { xs: 12, md: 20 },
+                        right: { xs: 12, md: 20 },
+                        px: { xs: 1.5, md: 2 },
+                        py: { xs: 0.5, md: 0.75 },
+                        bgcolor:
+                          theme.palette.mode === "dark"
+                            ? "rgba(0, 0, 0, 0.7)"
+                            : "rgba(255, 255, 255, 0.95)",
+                        backdropFilter: "blur(10px)",
+                        borderRadius: 2,
+                        border:
+                          theme.palette.mode === "dark"
+                            ? "1px solid rgba(255, 255, 255, 0.1)"
+                            : "1px solid rgba(255, 255, 255, 0.2)",
+                        boxShadow:
+                          theme.palette.mode === "dark"
+                            ? "0 4px 12px rgba(0, 0, 0, 0.3)"
+                            : "0 4px 12px rgba(0, 0, 0, 0.1)",
+                        zIndex: 2,
+                      }}
+                    >
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          fontWeight: 600,
+                          fontSize: { xs: "0.75rem", md: "0.85rem" },
+                          color:
+                            theme.palette.mode === "dark"
+                              ? "rgba(255, 255, 255, 0.9)"
+                              : "text.primary",
+                          letterSpacing: "0.5px",
+                        }}
+                      >
+                        {project.date}
+                      </Typography>
+                    </Box>
+                  </Box>
                   <CardContent
                     sx={{
                       p: { xs: 3, sm: 4, md: 5 },
@@ -339,10 +382,24 @@ const Projects = () => {
                           md: "2.25rem",
                         },
                         lineHeight: 1.2,
-                        mb: 2,
+                        mb: 1,
                       }}
                     >
                       {project.title}
+                    </Typography>
+                    {/* Date Display */}
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "primary.main",
+                        fontWeight: 500,
+                        fontSize: { xs: "0.85rem", md: "0.95rem" },
+                        mb: 2,
+                        opacity: 0.8,
+                        letterSpacing: "0.5px",
+                      }}
+                    >
+                      {project.date}
                     </Typography>
                     <Typography
                       variant="body1"
