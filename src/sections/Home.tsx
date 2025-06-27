@@ -1,12 +1,9 @@
 import React from "react";
 import { Box, Container, Typography, Button, Divider } from "@mui/material";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 const Home = () => {
-  const { scrollY } = useScroll();
-  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
-
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -17,7 +14,6 @@ const Home = () => {
   return (
     <Box
       component={motion.div}
-      style={{ opacity }}
       sx={{
         minHeight: "100vh",
         display: "flex",
