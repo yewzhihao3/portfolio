@@ -7,7 +7,7 @@ import Projects from "./sections/Projects";
 import Contact from "./sections/Contact";
 import Experience from "./sections/Experience";
 import { motion, AnimatePresence } from "framer-motion";
-import { createAppTheme, getGradientBackground } from "./theme/theme";
+import { createAppTheme } from "./theme/theme";
 
 // Animation variants for sections
 const pageVariants = {
