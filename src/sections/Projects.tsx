@@ -31,6 +31,7 @@ const Projects = () => {
       technologies: ["Python", "Pandas", "openai", "matplotlib", "NumPy"],
       github: "https://github.com/yewzhihao3/emailComplainAutomation",
       image: "/images/email-automation.png",
+      date: "2025",
     },
     {
       title: "PetPaw - Comprehensive Pet Care Platform",
@@ -45,6 +46,25 @@ const Projects = () => {
       ],
       github: "https://github.com/yewzhihao3/PetPaw-React-Native",
       image: "/images/PetPaw.png",
+      date: "2024",
+    },
+    {
+      title: "Bike Sales Analytics Dashboard",
+      description:
+        "A comprehensive data analytics project focused on bike sales analysis. Developed interactive dashboards to visualize sales trends, customer demographics, and revenue metrics. Implemented predictive analytics for sales forecasting.",
+      technologies: ["Python", "Pandas", "Data Visualization"],
+      github: "https://github.com/yewzhihao3/Data-analytics",
+      image: "/images/bike_sales.png",
+      date: "2023",
+    },
+    {
+      title: "Online Pharmacy Management System",
+      description:
+        "A web-based pharmacy management system that handles inventory, prescriptions, and sales. Features include medication tracking, prescription validation, stock management, and automated reordering system.",
+      technologies: ["Python", "Object-Oriented Programming"],
+      github: "https://github.com/yewzhihao3/Side-Projects",
+      image: "/images/pharmacy.jpg",
+      date: "2023",
     },
     {
       title: "Electric Bill Calculator",
@@ -58,6 +78,7 @@ const Projects = () => {
       ],
       github: "https://github.com/yewzhihao3/Side-Projects",
       image: "/images/eleteric.webp",
+      date: "2022",
     },
     {
       title: "Python Banking System",
@@ -66,22 +87,7 @@ const Projects = () => {
       technologies: ["Python", "Object-Oriented Programming"],
       github: "https://github.com/yewzhihao3/Side-Projects",
       image: "/images/bank.jpg",
-    },
-    {
-      title: "Bike Sales Analytics Dashboard",
-      description:
-        "A comprehensive data analytics project focused on bike sales analysis. Developed interactive dashboards to visualize sales trends, customer demographics, and revenue metrics. Implemented predictive analytics for sales forecasting.",
-      technologies: ["Python", "Pandas", "Data Visualization"],
-      github: "https://github.com/yewzhihao3/Data-analytics",
-      image: "/images/bike_sales.png",
-    },
-    {
-      title: "Online Pharmacy Management System",
-      description:
-        "A web-based pharmacy management system that handles inventory, prescriptions, and sales. Features include medication tracking, prescription validation, stock management, and automated reordering system.",
-      technologies: ["Python", "Object-Oriented Programming"],
-      github: "https://github.com/yewzhihao3/Side-Projects",
-      image: "/images/pharmacy.jpg",
+      date: "2022",
     },
   ];
 
@@ -315,23 +321,6 @@ const Projects = () => {
                       },
                     }}
                   />
-                  <Box
-                    className="project-number"
-                    sx={{
-                      position: "absolute",
-                      top: { xs: 16, md: 32 },
-                      right: { xs: 16, md: 32 },
-                      fontSize: { xs: "4rem", sm: "5rem", md: "6rem" },
-                      fontWeight: 700,
-                      opacity: 0.06,
-                      lineHeight: 1,
-                      transition: "color 0.3s ease",
-                      color: "#fff",
-                      zIndex: 1,
-                    }}
-                  >
-                    {String(index + 1).padStart(2, "0")}
-                  </Box>
                   <CardContent
                     sx={{
                       p: { xs: 3, sm: 4, md: 5 },
