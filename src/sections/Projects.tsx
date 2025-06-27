@@ -266,8 +266,6 @@ const Projects = () => {
               display: "flex",
               overflowX: "hidden",
               scrollSnapType: "x mandatory",
-              cursor: isDragging ? "grabbing" : "grab",
-              userSelect: "none",
               "&::-webkit-scrollbar": {
                 display: "none",
               },
