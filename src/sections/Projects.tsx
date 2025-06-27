@@ -25,6 +25,14 @@ const Projects = () => {
 
   const projects = [
     {
+      title: "Email Complaints Automation System",
+      description:
+        "An intelligent Python automation system designed to handle customer complaint emails by extracting key details, identifying root causes, and suggesting appropriate solutions. The system supports keyword detection, automated tagging, and structured response generation. It streamlines support workflows and can be integrated with internal ticketing or knowledge base tools.",
+      technologies: ["Python", "Pandas", "openai", "matplotlib", "NumPy"],
+      github: "https://github.com/yewzhihao3/emailComplainAutomation",
+      image: "/images/email-automation.png",
+    },
+    {
       title: "PetPaw - Comprehensive Pet Care Platform",
       description:
         "A feature-rich mobile application built with React Native that serves as an all-in-one pet care solution. Features include pet hotel booking, grooming services, pet taxi, interactive blog platform, personal pet diary, and a dedicated e-commerce marketplace. The app integrates multiple payment gateways, real-time booking systems, and location-based services to provide a seamless experience for pet owners.",
