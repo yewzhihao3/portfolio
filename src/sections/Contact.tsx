@@ -35,8 +35,8 @@ const Contact = () => {
     {
       icon: <PhoneIcon fontSize="large" />,
       label: "Phone",
-      value: "+60-11-1107-5923",
-      link: "https://wa.me/60111107592",
+      value: "+60 111-1075923",
+      link: "https://wa.me/601111075923",
       copyable: true,
     },
     {
