@@ -1,28 +1,26 @@
 import React, { useState } from "react";
 import { ThemeProvider, Box, CssBaseline, GlobalStyles } from "@mui/material";
 import Navbar from "./components/Navbar";
+import SocialSidebar from "./components/SocialSidebar";
+import ResumeSidebar from "./components/ResumeSidebar";
 import Home from "./sections/Home";
 import About from "./sections/About";
-import Projects from "./sections/Projects";
-import Contact from "./sections/Contact";
 import Experience from "./sections/Experience";
+import Projects from "./sections/Projects";
+import Skills from "./components/Skills";
+import Contact from "./sections/Contact";
 import { motion, AnimatePresence } from "framer-motion";
 import { createAppTheme } from "./theme/theme";
 
-// Animation variants for sections
 const pageVariants = {
   hidden: {
     opacity: 0,
-    y: 20,
   },
   visible: {
     opacity: 1,
-    y: 0,
     transition: {
       duration: 0.6,
       ease: "easeOut",
-      when: "beforeChildren",
-      staggerChildren: 0.2,
     },
   },
 };
@@ -36,14 +34,14 @@ const sectionVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.5,
+      duration: 0.6,
       ease: "easeOut",
     },
   },
 };
 
 function App() {
-  const [mode, setMode] = useState<"light" | "dark">("light");
+  const [mode, setMode] = useState<"light" | "dark">("dark");
   const theme = createAppTheme(mode);
 
   const toggleTheme = () => {
@@ -62,35 +60,13 @@ function App() {
             },
           },
           "*::-webkit-scrollbar-track": {
-            background: "#f1f1f1",
-            "@media (max-width: 600px)": {
-              display: "none",
-            },
+            background: mode === "dark" ? "#09090b" : "#f8fafc",
           },
           "*::-webkit-scrollbar-thumb": {
-            background: "#888",
+            background: mode === "dark" ? "#27272a" : "#cbd5e1",
             borderRadius: "4px",
             "&:hover": {
-              background: "#555",
-            },
-            "@media (max-width: 600px)": {
-              display: "none",
-            },
-          },
-          body: {
-            "@media (max-width: 600px)": {
-              scrollbarWidth: "none", // Firefox
-              msOverflowStyle: "none", // IE/Edge
-              "&::-webkit-scrollbar": {
-                // Chrome/Safari/Opera
-                display: "none",
-              },
-            },
-          },
-          html: {
-            "@media (max-width: 600px)": {
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
+              background: "#8b5cf6",
             },
           },
         }}
@@ -102,10 +78,19 @@ function App() {
         animate="visible"
         sx={{
           minHeight: "100vh",
-          background: theme.palette.background.default,
+          bgcolor: "background.default",
+          color: "text.primary",
+          position: "relative",
         }}
       >
+        {/* Fixed Top Navbar */}
         <Navbar toggleTheme={toggleTheme} mode={mode} />
+
+        {/* Fixed Sidebars for Desktop */}
+        <SocialSidebar />
+        <ResumeSidebar />
+
+        {/* Main Content Sections */}
         <AnimatePresence>
           <Box component="main">
             <motion.section
@@ -113,7 +98,7 @@ function App() {
               variants={sectionVariants}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
+              viewport={{ once: true, amount: 0.2 }}
             >
               <Home />
             </motion.section>
@@ -123,7 +108,7 @@ function App() {
               variants={sectionVariants}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
+              viewport={{ once: true, amount: 0.2 }}
             >
               <About />
             </motion.section>
@@ -133,7 +118,7 @@ function App() {
               variants={sectionVariants}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
+              viewport={{ once: true, amount: 0.2 }}
             >
               <Experience />
             </motion.section>
@@ -143,9 +128,19 @@ function App() {
               variants={sectionVariants}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
+              viewport={{ once: true, amount: 0.2 }}
             >
               <Projects />
+            </motion.section>
+
+            <motion.section
+              id="skills"
+              variants={sectionVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.2 }}
+            >
+              <Skills />
             </motion.section>
 
             <motion.section
@@ -153,7 +148,7 @@ function App() {
               variants={sectionVariants}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.3 }}
+              viewport={{ once: true, amount: 0.2 }}
             >
               <Contact />
             </motion.section>

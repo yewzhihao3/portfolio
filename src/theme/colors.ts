@@ -1,43 +1,42 @@
-// Unified color configuration for the portfolio
 export const colors = {
-  // Primary brand colors
+  // Primary brand colors (Modern Violet / Indigo Accent)
   primary: {
-    main: "#9c27b0",
-    light: "#ba68c8",
-    dark: "#7b1fa2",
+    main: "#8b5cf6",
+    light: "#a78bfa",
+    dark: "#6d28d9",
   },
 
   // Secondary colors
   secondary: {
-    main: "#e1bee7",
+    main: "#ec4899",
   },
 
-  // Background colors - ensuring consistency
+  // Background colors
   background: {
     // Main page background
     default: {
-      light: "#ffffff",
-      dark: "#121212",
+      light: "#f8fafc",
+      dark: "#09090b",
     },
     // Card/Paper background
     paper: {
-      light: "#f8f9fa",
-      dark: "#1e1e1e",
+      light: "#ffffff",
+      dark: "#121218",
     },
-    // Section background (slightly different for visual separation)
+    // Section background
     section: {
-      light: "#f5f5f5",
-      dark: "#1a1a1a",
+      light: "#f1f5f9",
+      dark: "#0f0f14",
     },
     // Gradient backgrounds
     gradient: {
       light: {
-        start: "rgba(255,255,255,0)",
-        end: "rgba(245,245,245,1)",
+        start: "rgba(248,250,252,1)",
+        end: "rgba(241,245,249,1)",
       },
       dark: {
-        start: "rgba(18,18,18,0)",
-        end: "rgba(30,30,30,1)",
+        start: "rgba(9,9,11,1)",
+        end: "rgba(18,18,24,1)",
       },
     },
   },
@@ -45,49 +44,49 @@ export const colors = {
   // Text colors
   text: {
     primary: {
-      light: "#333333",
-      dark: "#ffffff",
+      light: "#0f172a",
+      dark: "#f8fafc",
     },
     secondary: {
-      light: "#666666",
-      dark: "#b3b3b3",
+      light: "#475569",
+      dark: "#94a3b8",
     },
   },
 
   // Border colors
   border: {
-    light: "rgba(0, 0, 0, 0.12)",
-    dark: "rgba(255, 255, 255, 0.12)",
+    light: "rgba(0, 0, 0, 0.08)",
+    dark: "rgba(255, 255, 255, 0.08)",
   },
 
   // Overlay colors for glassmorphism effects
   overlay: {
-    light: "rgba(255, 255, 255, 0.95)",
-    dark: "rgba(0, 0, 0, 0.7)",
+    light: "rgba(255, 255, 255, 0.85)",
+    dark: "rgba(9, 9, 11, 0.85)",
     background: {
-      light: "rgba(255, 255, 255, 0.95)",
-      dark: "rgba(0, 0, 0, 0.7)",
+      light: "rgba(255, 255, 255, 0.85)",
+      dark: "rgba(18, 18, 24, 0.85)",
     },
     border: {
-      light: "rgba(255, 255, 255, 0.2)",
+      light: "rgba(0, 0, 0, 0.06)",
       dark: "rgba(255, 255, 255, 0.1)",
     },
     text: {
-      light: "#333333",
+      light: "#0f172a",
       dark: "rgba(255, 255, 255, 0.9)",
     },
   },
 
   // Shadow colors
   shadow: {
-    light: "rgba(0, 0, 0, 0.1)",
-    dark: "rgba(0, 0, 0, 0.3)",
+    light: "rgba(139, 92, 246, 0.08)",
+    dark: "rgba(0, 0, 0, 0.5)",
   },
 
   // Hover state colors
   hover: {
-    light: "rgba(0, 0, 0, 0.04)",
-    dark: "rgba(255, 255, 255, 0.08)",
+    light: "rgba(139, 92, 246, 0.05)",
+    dark: "rgba(255, 255, 255, 0.06)",
   },
 };
 

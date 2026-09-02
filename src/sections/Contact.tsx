@@ -3,18 +3,23 @@ import {
   Box,
   Container,
   Typography,
-  Link,
   Paper,
   IconButton,
+  Button,
   Snackbar,
+  useTheme,
+  Tooltip,
 } from "@mui/material";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import EmailIcon from "@mui/icons-material/Email";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import DescriptionIcon from "@mui/icons-material/Description";
 
 const Contact = () => {
+  const theme = useTheme();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
@@ -24,86 +29,90 @@ const Contact = () => {
     setSnackbarOpen(true);
   };
 
-  const contactInfo = [
+  const contactCards = [
     {
-      icon: <EmailIcon fontSize="large" />,
-      label: "Email",
+      icon: <EmailIcon color="primary" fontSize="large" />,
+      title: "Email",
       value: "yewzhihao3@gmail.com",
-      link: null,
-      copyable: true,
+      actionLabel: "Copy Email",
+      onAction: () => handleCopy("yewzhihao3@gmail.com", "Email"),
     },
     {
-      icon: <PhoneIcon fontSize="large" />,
-      label: "Phone",
-      value: "+60 111-1075923",
-      link: "https://wa.me/601111075923",
-      copyable: true,
+      icon: <PhoneIcon color="primary" fontSize="large" />,
+      title: "Phone / WhatsApp",
+      value: "+(60) 11-1107-5923",
+      actionLabel: "Chat on WhatsApp",
+      onAction: () => window.open("https://wa.me/601111075923", "_blank"),
     },
     {
-      icon: <LocationOnIcon fontSize="large" />,
-      label: "Location",
-      value: "Bayan Lepas, Penang",
-      link: null,
-      copyable: true,
-    },
-    {
-      icon: <LinkedInIcon fontSize="large" />,
-      label: "LinkedIn",
+      icon: <LinkedInIcon color="primary" fontSize="large" />,
+      title: "LinkedIn",
       value: "linkedin.com/in/yewzhihao",
-      link: "https://www.linkedin.com/in/yewzhihao/",
-      copyable: true,
+      actionLabel: "View Profile",
+      onAction: () =>
+        window.open("https://www.linkedin.com/in/yewzhihao/", "_blank"),
+    },
+    {
+      icon: <LocationOnIcon color="primary" fontSize="large" />,
+      title: "Location",
+      value: "Taiping, Perak / Penang, Malaysia",
+      actionLabel: "Copy Location",
+      onAction: () =>
+        handleCopy("Taiping, Perak / Penang, Malaysia", "Location"),
     },
   ];
 
   return (
     <Box
+      component="section"
+      id="contact"
       sx={{
-        py: 12,
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
+        py: { xs: 8, md: 12 },
         bgcolor: "background.default",
       }}
     >
-      <Container maxWidth="xl">
-        <Typography
-          variant="h2"
-          component="h2"
-          align="center"
-          sx={{
-            fontWeight: 300,
-            mb: 6,
-            color: "text.primary",
-            "&::after": {
-              content: '""',
-              display: "block",
-              width: "40px",
-              height: "2px",
+      <Container maxWidth="lg">
+        {/* Section Header */}
+        <Box sx={{ textAlign: "center", mb: { xs: 5, md: 7 } }}>
+          <Typography
+            variant="h2"
+            component="h2"
+            sx={{
+              fontWeight: 700,
+              fontFamily: "'Inter', sans-serif",
+              fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
+              letterSpacing: "-0.02em",
+            }}
+          >
+            Contact
+          </Typography>
+          <Box
+            sx={{
+              width: "50px",
+              height: "3px",
+              borderRadius: "2px",
               bgcolor: "primary.main",
-              margin: "20px auto 0",
-              opacity: 0.7,
-            },
-          }}
-        >
-          Get in Touch
-        </Typography>
+              mx: "auto",
+              mt: 1.5,
+            }}
+          />
+        </Box>
 
         <Typography
-          variant="h6"
+          variant="body1"
           align="center"
           color="text.secondary"
           sx={{
-            mb: 8,
-            maxWidth: "800px",
+            mb: 6,
+            maxWidth: "600px",
             mx: "auto",
-            fontWeight: 300,
             lineHeight: 1.8,
           }}
         >
-          I'm always open to new opportunities and collaborations. Feel free to
-          reach out through any of the following channels.
+          Feel free to reach out via email or connect with me on LinkedIn.
         </Typography>
 
+        {/* Contact Cards Grid */}
         <Box
           sx={{
             display: "grid",
@@ -113,76 +122,161 @@ const Contact = () => {
               md: "repeat(4, 1fr)",
             },
             gap: 3,
-            maxWidth: "1200px",
-            mx: "auto",
+            mb: 6,
           }}
         >
-          {contactInfo.map((info, index) => (
+          {contactCards.map((card, idx) => (
             <Paper
-              key={index}
+              key={idx}
               elevation={0}
               sx={{
-                p: 3,
+                p: 3.5,
+                height: "100%",
+                borderRadius: 4,
                 bgcolor: "background.paper",
-                borderRadius: 2,
                 border: "1px solid",
                 borderColor: "divider",
-                transition: "transform 0.3s ease-in-out",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                textAlign: "center",
+                gap: 2,
+                transition: "all 0.3s ease",
                 "&:hover": {
-                  transform: "translateY(-4px)",
+                  borderColor: "primary.main",
                 },
               }}
             >
               <Box
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  textAlign: "center",
-                  gap: 2,
+                  p: 1.2,
+                  borderRadius: "50%",
+                  bgcolor:
+                    theme.palette.mode === "dark"
+                      ? "rgba(139, 92, 246, 0.15)"
+                      : "rgba(139, 92, 246, 0.08)",
                 }}
               >
-                {info.icon}
-                <Typography
-                  variant="h6"
-                  sx={{ fontWeight: 500, color: "primary.main" }}
-                >
-                  {info.label}
-                </Typography>
-                {info.link ? (
-                  <Link
-                    href={info.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{
-                      color: "text.primary",
-                      textDecoration: "none",
-                      "&:hover": { color: "primary.main" },
-                    }}
-                  >
-                    <Typography variant="body1">{info.value}</Typography>
-                  </Link>
-                ) : (
-                  <Typography variant="body1" color="text.primary">
-                    {info.value}
-                  </Typography>
-                )}
-                {info.copyable && (
-                  <IconButton
-                    onClick={() => handleCopy(info.value, info.label)}
-                    size="small"
-                    sx={{
-                      mt: 1,
-                      color: "text.secondary",
-                      "&:hover": { color: "primary.main" },
-                    }}
-                  >
-                    <ContentCopyIcon />
-                  </IconButton>
-                )}
+                {card.icon}
               </Box>
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 700,
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontSize: "1.05rem",
+                }}
+              >
+                {card.title}
+              </Typography>
+              <Typography
+                variant="body2"
+                color="text.secondary"
+                sx={{ fontWeight: 500, wordBreak: "break-word" }}
+              >
+                {card.value}
+              </Typography>
+
+              <Button
+                size="small"
+                variant="outlined"
+                color="primary"
+                onClick={card.onAction}
+                sx={{
+                  mt: "auto",
+                  borderRadius: "20px",
+                  textTransform: "none",
+                  fontWeight: 600,
+                  fontSize: "0.75rem",
+                  px: 2,
+                }}
+              >
+                {card.actionLabel}
+              </Button>
             </Paper>
           ))}
+        </Box>
+
+        {/* Resume Button */}
+        <Box sx={{ textAlign: "center", mb: 8 }}>
+          <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            component="a"
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            startIcon={<DescriptionIcon />}
+            sx={{
+              borderRadius: "30px",
+              px: 4,
+              py: 1.5,
+              fontSize: "0.95rem",
+              fontWeight: 600,
+              textTransform: "none",
+            }}
+          >
+            Download Resume PDF
+          </Button>
+        </Box>
+
+        {/* Footer */}
+        <Box
+          sx={{
+            pt: 4,
+            borderTop: "1px solid",
+            borderColor: "divider",
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            justifyContent: "space-between",
+            alignItems: "center",
+            gap: 2,
+          }}
+        >
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{ fontFamily: "'Space Grotesk', sans-serif" }}
+          >
+            &copy; {new Date().getFullYear()} Yew Zhi Hao. All rights reserved.
+          </Typography>
+
+          <Box sx={{ display: "flex", gap: 1 }}>
+            <Tooltip title="GitHub">
+              <IconButton
+                component="a"
+                href="https://github.com/yewzhihao3"
+                target="_blank"
+                size="small"
+                sx={{ color: "text.secondary", "&:hover": { color: "primary.main" } }}
+              >
+                <GitHubIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="LinkedIn">
+              <IconButton
+                component="a"
+                href="https://www.linkedin.com/in/yewzhihao/"
+                target="_blank"
+                size="small"
+                sx={{ color: "text.secondary", "&:hover": { color: "primary.main" } }}
+              >
+                <LinkedInIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="WhatsApp">
+              <IconButton
+                component="a"
+                href="https://wa.me/601111075923"
+                target="_blank"
+                size="small"
+                sx={{ color: "text.secondary", "&:hover": { color: "primary.main" } }}
+              >
+                <WhatsAppIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          </Box>
         </Box>
 
         <Snackbar

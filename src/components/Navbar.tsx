@@ -13,6 +13,8 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  Tooltip,
+  Snackbar,
 } from "@mui/material";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
@@ -22,6 +24,8 @@ import WorkIcon from "@mui/icons-material/Work";
 import EmailIcon from "@mui/icons-material/Email";
 import MenuIcon from "@mui/icons-material/Menu";
 import TimelineIcon from "@mui/icons-material/Timeline";
+import CodeIcon from "@mui/icons-material/Code";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 interface NavbarProps {
   toggleTheme: () => void;
@@ -31,15 +35,17 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({ toggleTheme, mode }) => {
   const [activeSection, setActiveSection] = useState("home");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const navItems = [
-    { id: "home", label: "Home", icon: <HomeIcon /> },
-    { id: "about", label: "About", icon: <PersonIcon /> },
-    { id: "experience", label: "Journey", icon: <TimelineIcon /> },
-    { id: "projects", label: "Projects", icon: <WorkIcon /> },
-    { id: "contact", label: "Contact", icon: <EmailIcon /> },
+    { id: "home", label: "HOME", icon: <HomeIcon fontSize="small" /> },
+    { id: "about", label: "ABOUT", icon: <PersonIcon fontSize="small" /> },
+    { id: "experience", label: "JOURNEY", icon: <TimelineIcon fontSize="small" /> },
+    { id: "projects", label: "PROJECTS", icon: <WorkIcon fontSize="small" /> },
+    { id: "skills", label: "SKILLS", icon: <CodeIcon fontSize="small" /> },
+    { id: "contact", label: "CONTACT", icon: <EmailIcon fontSize="small" /> },
   ];
 
   const handleDrawerToggle = () => {
@@ -54,13 +60,18 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, mode }) => {
     }
   };
 
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("yewzhihao3@gmail.com");
+    setSnackbarOpen(true);
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const sections = navItems.map((item) => document.getElementById(item.id));
       const currentSection = sections.find((section) => {
         if (section) {
           const rect = section.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
+          return rect.top <= 120 && rect.bottom >= 120;
         }
         return false;
       });
@@ -72,10 +83,11 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, mode }) => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const drawer = (
-    <List sx={{ pt: 8 }}>
+    <List sx={{ pt: 6 }}>
       {navItems.map((item) => (
         <ListItem
           key={item.id}
@@ -83,161 +95,255 @@ const Navbar: React.FC<NavbarProps> = ({ toggleTheme, mode }) => {
           sx={{
             color: activeSection === item.id ? "primary.main" : "text.primary",
             cursor: "pointer",
+            py: 1.5,
+            px: 3,
             "&:hover": {
               bgcolor:
                 mode === "light"
-                  ? "rgba(0, 0, 0, 0.04)"
-                  : "rgba(255, 255, 255, 0.08)",
+                  ? "rgba(139, 92, 246, 0.08)"
+                  : "rgba(139, 92, 246, 0.15)",
             },
           }}
         >
           <ListItemIcon
             sx={{
               color: activeSection === item.id ? "primary.main" : "inherit",
+              minWidth: "36px",
             }}
           >
             {item.icon}
           </ListItemIcon>
-          <ListItemText primary={item.label} />
+          <ListItemText
+            primary={item.label}
+            primaryTypographyProps={{
+              fontWeight: activeSection === item.id ? 700 : 500,
+              fontSize: "0.9rem",
+              letterSpacing: "0.1em",
+            }}
+          />
         </ListItem>
       ))}
     </List>
   );
 
   return (
-    <AppBar
-      position="fixed"
-      elevation={0}
-      sx={{
-        bgcolor:
-          mode === "light"
-            ? "rgba(255, 255, 255, 0.9)"
-            : "rgba(18, 18, 18, 0.8)",
-        backdropFilter: "blur(8px)",
-        borderBottom: 1,
-        borderColor: "divider",
-      }}
-    >
-      <Toolbar sx={{ justifyContent: "space-between" }}>
-        <Typography
-          variant="h6"
-          component="div"
-          sx={{
-            cursor: "pointer",
-            color: mode === "light" ? "#000000" : "#ffffff",
-            fontWeight: 600,
-            letterSpacing: "0.5px",
-            "&:hover": { color: "primary.main" },
-            transition: "color 0.3s ease",
-          }}
-          onClick={() => scrollToSection("home")}
-        >
-          Yew Zhi Hao
-        </Typography>
-
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-          {!isMobile && (
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-              {navItems.map((item) => (
-                <Button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  sx={{
-                    fontWeight: 500,
-                    px: 2,
-                    py: 1,
-                    borderRadius: 2,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 0.5,
-                    position: "relative",
-                    color:
-                      activeSection === item.id
-                        ? "primary.main"
-                        : "text.primary",
-                    "&::after": {
-                      content: '""',
-                      position: "absolute",
-                      bottom: 0,
-                      left: "50%",
-                      transform:
-                        activeSection === item.id
-                          ? "translateX(-50%)"
-                          : "translateX(-50%) scaleX(0)",
-                      height: "3px",
-                      width: "80%",
-                      backgroundColor: "primary.main",
-                      transition: "transform 0.3s ease",
-                    },
-                    "&:hover": {
-                      color: "primary.main",
-                      backgroundColor:
-                        mode === "light"
-                          ? "rgba(0, 0, 0, 0.04)"
-                          : "rgba(255, 255, 255, 0.08)",
-                    },
-                  }}
-                >
-                  {item.icon}
-                  {item.label}
-                </Button>
-              ))}
-            </Box>
-          )}
-
-          {isMobile && (
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
+    <>
+      <AppBar
+        position="fixed"
+        elevation={0}
+        sx={{
+          bgcolor:
+            mode === "light"
+              ? "rgba(248, 250, 252, 0.85)"
+              : "rgba(9, 9, 11, 0.85)",
+          backdropFilter: "blur(12px)",
+          borderBottom: "1px solid",
+          borderColor: "divider",
+          px: { xs: 1, sm: 3, md: 5 },
+        }}
+      >
+        <Toolbar sx={{ justifyContent: "space-between", minHeight: "70px" }}>
+          {/* Logo */}
+          <Box
+            onClick={() => scrollToSection("home")}
+            sx={{
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: 1,
+            }}
+          >
+            <Typography
+              variant="h6"
               sx={{
-                color: mode === "light" ? "text.primary" : "#ffffff",
+                fontWeight: 800,
+                letterSpacing: "-0.02em",
+                fontFamily: "'Space Grotesk', sans-serif",
+                background:
+                  mode === "dark"
+                    ? "linear-gradient(135deg, #ffffff 0%, #a78bfa 100%)"
+                    : "linear-gradient(135deg, #0f172a 0%, #6d28d9 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                fontSize: { xs: "1.1rem", sm: "1.3rem" },
               }}
             >
-              <MenuIcon />
-            </IconButton>
+              YZH <span style={{ color: theme.palette.primary.main }}>/&gt;</span>
+            </Typography>
+          </Box>
+
+          {/* Email quick pill (Desktop) */}
+          {!isMobile && (
+            <Tooltip title="Click to copy email" arrow>
+              <Box
+                onClick={handleCopyEmail}
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  px: 2,
+                  py: 0.6,
+                  borderRadius: "20px",
+                  bgcolor:
+                    mode === "light"
+                      ? "rgba(0,0,0,0.04)"
+                      : "rgba(255,255,255,0.05)",
+                  border: `1px solid ${
+                    mode === "light"
+                      ? "rgba(0,0,0,0.08)"
+                      : "rgba(255,255,255,0.08)"
+                  }`,
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    borderColor: "primary.main",
+                    bgcolor:
+                      mode === "light"
+                        ? "rgba(139, 92, 246, 0.08)"
+                        : "rgba(139, 92, 246, 0.15)",
+                    transform: "scale(1.02)",
+                  },
+                }}
+              >
+                <EmailIcon fontSize="small" color="primary" />
+                <Typography
+                  variant="caption"
+                  sx={{
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontWeight: 500,
+                    letterSpacing: "0.02em",
+                    color: "text.primary",
+                  }}
+                >
+                  yewzhihao3@gmail.com
+                </Typography>
+                <ContentCopyIcon sx={{ fontSize: "14px", color: "text.secondary" }} />
+              </Box>
+            </Tooltip>
           )}
 
-          <IconButton
-            onClick={toggleTheme}
+          {/* Navigation Links */}
+          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+            {!isMobile && (
+              <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                {navItems.map((item) => (
+                  <Button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    sx={{
+                      fontWeight: activeSection === item.id ? 700 : 500,
+                      fontSize: "0.8rem",
+                      letterSpacing: "0.08em",
+                      px: 2,
+                      py: 0.8,
+                      borderRadius: 2,
+                      color:
+                        activeSection === item.id
+                          ? "primary.main"
+                          : "text.primary",
+                      transition: "all 0.3s ease",
+                      position: "relative",
+                      "&::after": {
+                        content: '""',
+                        position: "absolute",
+                        bottom: 4,
+                        left: "50%",
+                        transform:
+                          activeSection === item.id
+                            ? "translateX(-50%)"
+                            : "translateX(-50%) scaleX(0)",
+                        height: "2px",
+                        width: "60%",
+                        backgroundColor: "primary.main",
+                        borderRadius: "2px",
+                        transition: "transform 0.3s ease",
+                      },
+                      "&:hover": {
+                        color: "primary.main",
+                        backgroundColor:
+                          mode === "light"
+                            ? "rgba(139, 92, 246, 0.08)"
+                            : "rgba(139, 92, 246, 0.15)",
+                      },
+                    }}
+                  >
+                    {item.label}
+                  </Button>
+                ))}
+              </Box>
+            )}
+
+            {/* Theme Toggle Button */}
+            <Tooltip title={`Switch to ${mode === "dark" ? "Light" : "Dark"} Mode`}>
+              <IconButton
+                onClick={toggleTheme}
+                sx={{
+                  color: mode === "light" ? "text.primary" : "#ffffff",
+                  ml: 1,
+                  border: `1px solid ${
+                    mode === "light"
+                      ? "rgba(0, 0, 0, 0.12)"
+                      : "rgba(255, 255, 255, 0.12)"
+                  }`,
+                  borderRadius: 2,
+                  p: 1,
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    color: "primary.main",
+                    borderColor: "primary.main",
+                    transform: "rotate(15deg)",
+                  },
+                }}
+              >
+                {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+              </IconButton>
+            </Tooltip>
+
+            {/* Mobile Menu Icon */}
+            {isMobile && (
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ ml: 1, color: "text.primary" }}
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
+          </Box>
+
+          <Drawer
+            variant="temporary"
+            anchor="right"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            ModalProps={{
+              keepMounted: true,
+            }}
             sx={{
-              color: mode === "light" ? "text.primary" : "#ffffff",
-              ml: 2,
-              "&:hover": {
-                backgroundColor:
-                  mode === "light"
-                    ? "rgba(0, 0, 0, 0.04)"
-                    : "rgba(255, 255, 255, 0.08)",
+              display: { xs: "block", md: "none" },
+              "& .MuiDrawer-paper": {
+                boxSizing: "border-box",
+                width: 260,
+                bgcolor:
+                  mode === "light" ? "background.paper" : "background.default",
               },
             }}
           >
-            {mode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
-          </IconButton>
-        </Box>
+            {drawer}
+          </Drawer>
+        </Toolbar>
+      </AppBar>
 
-        <Drawer
-          variant="temporary"
-          anchor="right"
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true,
-          }}
-          sx={{
-            display: { xs: "block", md: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: 240,
-              bgcolor:
-                mode === "light" ? "background.paper" : "background.default",
-            },
-          }}
-        >
-          {drawer}
-        </Drawer>
-      </Toolbar>
-    </AppBar>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={2500}
+        onClose={() => setSnackbarOpen(false)}
+        message="Email copied to clipboard!"
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      />
+    </>
   );
 };
 

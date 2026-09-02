@@ -84,17 +84,19 @@ const EducationTimeline: React.FC<EducationTimelineProps> = ({ education }) => {
                 >
                   <Box
                     sx={{
-                      width: { xs: 50, sm: 60 },
-                      height: { xs: 50, sm: 60 },
+                      width: { xs: 52, sm: 64 },
+                      height: { xs: 52, sm: 64 },
                       borderRadius: 2,
                       overflow: "hidden",
                       mr: 2,
                       border: "1px solid",
                       borderColor: "divider",
-                      bgcolor: "background.default",
+                      bgcolor: "#ffffff",
+                      p: 0.8,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
+                      boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
                     }}
                   >
                     <Box
@@ -102,8 +104,8 @@ const EducationTimeline: React.FC<EducationTimelineProps> = ({ education }) => {
                       src={edu.logoUrl}
                       alt={`${edu.school} logo`}
                       sx={{
-                        width: "80%",
-                        height: "80%",
+                        width: "100%",
+                        height: "100%",
                         objectFit: "contain",
                       }}
                     />

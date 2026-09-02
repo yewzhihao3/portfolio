@@ -1,502 +1,357 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Container,
   Typography,
-  CardContent,
-  CardActions,
-  Button,
-  useTheme,
   Paper,
-  IconButton,
+  Button,
+  Chip,
+  useTheme,
   CardMedia,
+  Tabs,
+  Tab,
 } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import { colors } from "../theme/colors";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Projects = () => {
   const theme = useTheme();
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
+  const [activeCategory, setActiveCategory] = useState("all");
 
   const projects = [
     {
-      title: "Email Complaints Automation System",
+      number: "01",
+      title: "Pet Care Mobile Application",
+      category: "Full-Stack & Mobile",
+      categoryKey: "mobile",
       description:
-        "An intelligent Python automation system designed to handle customer complaint emails by extracting key details, identifying root causes, and suggesting appropriate solutions. The system supports keyword detection, automated tagging, and structured response generation. It streamlines support workflows and can be integrated with internal ticketing or knowledge base tools.",
-      technologies: ["Python", "Pandas", "openai", "matplotlib", "NumPy"],
+        "Final Year Project: A mobile application built with React Native for pet care management, including booking services, pet health tracking, personal diary, and e-commerce marketplace integrated with FastAPI and MySQL backend.",
+      technologies: ["React Native", "React", "FastAPI", "MySQL", "Node.js", "Google Maps API"],
+      github: "https://github.com/yewzhihao3/PetPaw-React-Native",
+      image: "/images/PetPaw.png",
+      date: "2024–2025",
+    },
+    {
+      number: "02",
+      title: "Email Complaints Automation System",
+      category: "AI & Automation",
+      categoryKey: "automation",
+      description:
+        "A Python automation tool that extracts complaint details from emails, classifies root causes using OpenAI API, generates structured response suggestions, and provides analytics charts.",
+      technologies: ["Python", "OpenAI API", "Pandas", "Matplotlib", "NumPy"],
       github: "https://github.com/yewzhihao3/emailComplainAutomation",
       image: "/images/email-automation.png",
       date: "2025",
     },
     {
-      title: "PetPaw - Comprehensive Pet Care Platform",
-      description:
-        "A feature-rich mobile application built with React Native that serves as an all-in-one pet care solution. Features include pet hotel booking, grooming services, pet taxi, interactive blog platform, personal pet diary, and a dedicated e-commerce marketplace. The app integrates multiple payment gateways, real-time booking systems, and location-based services to provide a seamless experience for pet owners.",
-      technologies: [
-        "React Native",
-        "Node.js",
-        "Python FastAPI",
-        "MYSQL",
-        "Google Maps API",
-      ],
-      github: "https://github.com/yewzhihao3/PetPaw-React-Native",
-      image: "/images/PetPaw.png",
-      date: "2024",
-    },
-    {
+      number: "03",
       title: "Bike Sales Analytics Dashboard",
+      category: "Data Analytics",
+      categoryKey: "analytics",
       description:
-        "A comprehensive data analytics project focused on bike sales analysis. Developed interactive dashboards to visualize sales trends, customer demographics, and revenue metrics. Implemented predictive analytics for sales forecasting.",
-      technologies: ["Python", "Pandas", "Data Visualization"],
+        "A data analytics project focused on analyzing bike sales data. Includes interactive visualizations for customer demographics, regional sales trends, revenue metrics, and sales forecasting.",
+      technologies: ["Python", "Pandas", "Matplotlib", "Data Visualization", "Jupyter"],
       github: "https://github.com/yewzhihao3/Data-analytics",
       image: "/images/bike_sales.png",
       date: "2023",
     },
     {
+      number: "04",
       title: "Online Pharmacy Management System",
+      category: "Full-Stack & Mobile",
+      categoryKey: "web",
       description:
-        "A web-based pharmacy management system that handles inventory, prescriptions, and sales. Features include medication tracking, prescription validation, stock management, and automated reordering system.",
-      technologies: ["Python", "Object-Oriented Programming"],
+        "A web-based pharmacy management system for tracking inventory, managing prescriptions, recording sales, and handling automated reordering alerts.",
+      technologies: ["Python", "OOP", "SQL"],
       github: "https://github.com/yewzhihao3/Side-Projects",
       image: "/images/pharmacy.jpg",
       date: "2023",
     },
     {
+      number: "05",
       title: "Electric Bill Calculator",
+      category: "AI & Automation",
+      categoryKey: "automation",
       description:
-        "An interactive Python application for calculating and analyzing monthly electric bills. Features include consumption-based tariff calculation, data persistence using CSV, monthly bill tracking, and data visualization with matplotlib. The system implements a multi-tier pricing structure and includes a green energy tariff calculator.",
-      technologies: [
-        "Python",
-        "Matplotlib",
-        "CSV Data Management",
-        "Data Visualization",
-      ],
+        "A Python application for calculating monthly electric bill tariffs, tracking consumption history via CSV, and visualizing monthly usage trends.",
+      technologies: ["Python", "Matplotlib", "CSV Data", "Data Visualization"],
       github: "https://github.com/yewzhihao3/Side-Projects",
       image: "/images/eleteric.webp",
       date: "2022",
     },
     {
+      number: "06",
       title: "Python Banking System",
+      category: "Full-Stack & Mobile",
+      categoryKey: "web",
       description:
-        "A robust banking system implementation featuring account management, transactions, and security measures. Includes features for deposits, withdrawals, transfers, and account statement generation with proper error handling and data persistence.",
-      technologies: ["Python", "Object-Oriented Programming"],
+        "An object-oriented banking application featuring account creation, fund deposits, withdrawals, transfers, and transaction history generation.",
+      technologies: ["Python", "OOP", "File I/O"],
       github: "https://github.com/yewzhihao3/Side-Projects",
       image: "/images/bank.jpg",
       date: "2022",
     },
   ];
 
-  const handleScroll = (direction: "left" | "right") => {
-    const newIndex =
-      direction === "left"
-        ? Math.max(0, currentIndex - 1)
-        : Math.min(projects.length - 1, currentIndex + 1);
-
-    setCurrentIndex(newIndex);
-
-    if (scrollContainerRef.current) {
-      const container = scrollContainerRef.current;
-      const scrollAmount = container.clientWidth;
-      container.scrollTo({
-        left: scrollAmount * newIndex,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  const handleDotClick = (index: number) => {
-    setCurrentIndex(index);
-    if (scrollContainerRef.current) {
-      const container = scrollContainerRef.current;
-      const scrollAmount = container.clientWidth;
-      container.scrollTo({
-        left: scrollAmount * index,
-        behavior: "smooth",
-      });
-    }
-  };
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!scrollContainerRef.current) return;
-    setIsDragging(true);
-    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
-    setScrollLeft(scrollContainerRef.current.scrollLeft);
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !scrollContainerRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (!scrollContainerRef.current) return;
-    setIsDragging(true);
-    setStartX(e.touches[0].pageX - scrollContainerRef.current.offsetLeft);
-    setScrollLeft(scrollContainerRef.current.scrollLeft);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    if (!isDragging || !scrollContainerRef.current) return;
-    const x = e.touches[0].pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 2;
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  // Update currentIndex on scroll
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-
-    const handleScrollEnd = () => {
-      const newIndex = Math.round(container.scrollLeft / container.clientWidth);
-      setCurrentIndex(newIndex);
-    };
-
-    container.addEventListener("scrollend", handleScrollEnd);
-    return () => container.removeEventListener("scrollend", handleScrollEnd);
-  }, []);
+  const filteredProjects =
+    activeCategory === "all"
+      ? projects
+      : projects.filter((p) => p.categoryKey === activeCategory);
 
   return (
-    <Box sx={{ py: 12, minHeight: "100vh", bgcolor: "background.default" }}>
-      <Container
-        maxWidth="lg"
-        sx={{
-          px: { xs: 2, sm: 3, md: 4 },
-        }}
-      >
-        <Typography
-          variant="h2"
-          component="h2"
-          align="center"
-          sx={{
-            fontWeight: 300,
-            mb: 8,
-            "&::after": {
-              content: '""',
-              display: "block",
-              width: "60px",
+    <Box
+      component="section"
+      id="projects"
+      sx={{
+        py: { xs: 8, md: 12 },
+        bgcolor: "background.default",
+      }}
+    >
+      <Container maxWidth="lg">
+        {/* Section Header */}
+        <Box sx={{ textAlign: "center", mb: { xs: 5, md: 7 } }}>
+          <Typography
+            variant="h2"
+            component="h2"
+            sx={{
+              fontWeight: 700,
+              fontFamily: "'Inter', sans-serif",
+              fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
+              letterSpacing: "-0.02em",
+            }}
+          >
+            Projects
+          </Typography>
+          <Box
+            sx={{
+              width: "50px",
               height: "3px",
+              borderRadius: "2px",
               bgcolor: "primary.main",
-              margin: "20px auto 0",
-            },
+              mx: "auto",
+              mt: 1.5,
+            }}
+          />
+        </Box>
+
+        {/* Category Tabs */}
+        <Box sx={{ display: "flex", justifyContent: "center", mb: 5 }}>
+          <Tabs
+            value={activeCategory}
+            onChange={(_, newValue) => setActiveCategory(newValue)}
+            variant="scrollable"
+            scrollButtons="auto"
+            sx={{
+              bgcolor: "background.paper",
+              borderRadius: "30px",
+              p: 0.5,
+              border: "1px solid",
+              borderColor: "divider",
+              "& .MuiTabs-indicator": {
+                bgcolor: "primary.main",
+                height: "100%",
+                borderRadius: "25px",
+                opacity: 0.15,
+              },
+            }}
+          >
+            <Tab label="All Projects" value="all" sx={{ fontWeight: 600, px: 2.5, textTransform: "none" }} />
+            <Tab label="Full-Stack & Mobile" value="mobile" sx={{ fontWeight: 600, px: 2.5, textTransform: "none" }} />
+            <Tab label="AI & Automation" value="automation" sx={{ fontWeight: 600, px: 2.5, textTransform: "none" }} />
+            <Tab label="Data Analytics" value="analytics" sx={{ fontWeight: 600, px: 2.5, textTransform: "none" }} />
+          </Tabs>
+        </Box>
+
+        {/* Projects Grid */}
+        <Box
+          sx={{
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "repeat(2, 1fr)" },
+            gap: 4,
           }}
         >
-          My Projects
-        </Typography>
-
-        <Box sx={{ position: "relative" }}>
-          {/* Left Arrow */}
-          <IconButton
-            onClick={() => handleScroll("left")}
-            disabled={currentIndex === 0}
-            sx={{
-              position: "absolute",
-              left: { xs: -8, sm: -12, md: -20 },
-              top: "50%",
-              transform: "translateY(-50%)",
-              zIndex: 2,
-              bgcolor: "background.paper",
-              boxShadow: theme.shadows[2],
-              width: { xs: 32, sm: 40, md: 48 },
-              height: { xs: 32, sm: 40, md: 48 },
-              "&:hover": {
-                bgcolor: "background.paper",
-              },
-              "&.Mui-disabled": {
-                opacity: 0,
-              },
-            }}
-          >
-            <ArrowBackIosNewIcon
-              sx={{ fontSize: { xs: "1.2rem", sm: "1.5rem", md: "1.8rem" } }}
-            />
-          </IconButton>
-
-          {/* Right Arrow */}
-          <IconButton
-            onClick={() => handleScroll("right")}
-            disabled={currentIndex === projects.length - 1}
-            sx={{
-              position: "absolute",
-              right: { xs: -8, sm: -12, md: -20 },
-              top: "50%",
-              transform: "translateY(-50%)",
-              zIndex: 2,
-              bgcolor: "background.paper",
-              boxShadow: theme.shadows[2],
-              width: { xs: 32, sm: 40, md: 48 },
-              height: { xs: 32, sm: 40, md: 48 },
-              "&:hover": {
-                bgcolor: "background.paper",
-              },
-              "&.Mui-disabled": {
-                opacity: 0,
-              },
-            }}
-          >
-            <ArrowForwardIosIcon
-              sx={{ fontSize: { xs: "1.2rem", sm: "1.5rem", md: "1.8rem" } }}
-            />
-          </IconButton>
-
-          {/* Scrollable Container */}
-          <Box
-            ref={scrollContainerRef}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
-            onMouseMove={handleMouseMove}
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleMouseUp}
-            onTouchMove={handleTouchMove}
-            sx={{
-              display: "flex",
-              overflowX: "hidden",
-              scrollSnapType: "x mandatory",
-              "&::-webkit-scrollbar": {
-                display: "none",
-              },
-              scrollbarWidth: "none", // Firefox
-              msOverflowStyle: "none", // IE and Edge
-            }}
-          >
-            {projects.map((project, index) => (
-              <Box
-                key={project.title}
+          <AnimatePresence>
+            {filteredProjects.map((project) => (
+              <Paper
+                key={project.number}
+                elevation={0}
+                component={motion.div}
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.4 }}
+                whileHover={{ y: -4 }}
                 sx={{
-                  minWidth: "100%",
-                  scrollSnapAlign: "start",
-                  padding: "0 4px",
+                  height: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  borderRadius: 4,
+                  bgcolor: "background.paper",
+                  border: "1px solid",
+                  borderColor: "divider",
+                  overflow: "hidden",
+                  transition: "all 0.3s ease",
+                  "&:hover": {
+                    borderColor: "primary.main",
+                  },
                 }}
               >
-                <Paper
-                  elevation={0}
-                  sx={{
-                    width: "100%",
-                    display: "flex",
-                    flexDirection: "column",
-                    bgcolor: "background.paper",
-                    border: "1px solid",
-                    borderColor: "divider",
-                    borderRadius: 3,
-                    overflow: "hidden",
-                    position: "relative",
-                    transition: "all 0.3s ease",
-                    "&:hover": {
-                      transform: "translateY(-8px)",
-                      boxShadow: theme.shadows[4],
-                      "& .project-number": {
-                        color: "primary.main",
-                      },
-                    },
-                  }}
-                >
-                  {/* Image Container with Date Badge */}
-                  <Box sx={{ position: "relative" }}>
-                    <CardMedia
-                      component="img"
-                      height="400"
-                      image={project.image}
-                      alt={project.title}
-                      sx={{
-                        objectFit: "contain",
-                        bgcolor: "background.default",
-                        p: 2,
-                        height: { xs: "250px", sm: "300px", md: "400px" },
-                        "&:hover": {
-                          transform: "scale(1.02)",
-                          transition: "transform 0.3s ease-in-out",
-                        },
-                      }}
-                    />
-                    {/* Date Badge */}
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        top: { xs: 12, md: 20 },
-                        right: { xs: 12, md: 20 },
-                        px: { xs: 1.5, md: 2 },
-                        py: { xs: 0.5, md: 0.75 },
-                        bgcolor:
-                          theme.palette.mode === "dark"
-                            ? colors.overlay.background.dark
-                            : colors.overlay.background.light,
-                        backdropFilter: "blur(10px)",
-                        borderRadius: 2,
-                        border:
-                          theme.palette.mode === "dark"
-                            ? `1px solid ${colors.overlay.border.dark}`
-                            : `1px solid ${colors.overlay.border.light}`,
-                        boxShadow:
-                          theme.palette.mode === "dark"
-                            ? "0 4px 12px rgba(0, 0, 0, 0.3)"
-                            : "0 4px 12px rgba(0, 0, 0, 0.1)",
-                        zIndex: 2,
-                      }}
-                    >
-                      <Typography
-                        variant="caption"
-                        sx={{
-                          fontWeight: 600,
-                          fontSize: { xs: "0.75rem", md: "0.85rem" },
-                          color:
-                            theme.palette.mode === "dark"
-                              ? colors.overlay.text.dark
-                              : colors.overlay.text.light,
-                          letterSpacing: "0.5px",
-                        }}
-                      >
-                        {project.date}
-                      </Typography>
-                    </Box>
-                  </Box>
-                  <CardContent
+                {/* Image */}
+                <Box sx={{ position: "relative", overflow: "hidden" }}>
+                  <CardMedia
+                    component="img"
+                    image={project.image}
+                    alt={project.title}
                     sx={{
-                      p: { xs: 3, sm: 4, md: 5 },
-                      pb: { xs: 2, sm: 2.5, md: 3 },
-                      flexGrow: 1,
+                      height: { xs: "200px", sm: "240px" },
+                      objectFit: "cover",
+                      bgcolor: "background.default",
+                    }}
+                  />
+
+                  {/* Number Badge */}
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 14,
+                      left: 14,
+                      px: 1.8,
+                      py: 0.4,
+                      borderRadius: "14px",
+                      bgcolor:
+                        theme.palette.mode === "dark"
+                          ? "rgba(9, 9, 11, 0.85)"
+                          : "rgba(255, 255, 255, 0.9)",
+                      backdropFilter: "blur(8px)",
+                      border: "1px solid",
+                      borderColor: "divider",
                     }}
                   >
                     <Typography
-                      variant="h4"
-                      component="h3"
-                      sx={{
-                        fontWeight: 600,
-                        fontSize: {
-                          xs: "1.5rem",
-                          sm: "1.75rem",
-                          md: "2.25rem",
-                        },
-                        lineHeight: 1.2,
-                        mb: 1,
-                      }}
-                    >
-                      {project.title}
-                    </Typography>
-                    {/* Date Display */}
-                    <Typography
                       variant="body2"
                       sx={{
+                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontWeight: 700,
                         color: "primary.main",
-                        fontWeight: 500,
-                        fontSize: { xs: "0.85rem", md: "0.95rem" },
-                        mb: 2,
-                        opacity: 0.8,
-                        letterSpacing: "0.5px",
+                      }}
+                    >
+                      {project.number}
+                    </Typography>
+                  </Box>
+
+                  {/* Date Badge */}
+                  <Box
+                    sx={{
+                      position: "absolute",
+                      top: 14,
+                      right: 14,
+                      px: 1.8,
+                      py: 0.4,
+                      borderRadius: "14px",
+                      bgcolor:
+                        theme.palette.mode === "dark"
+                          ? "rgba(9, 9, 11, 0.85)"
+                          : "rgba(255, 255, 255, 0.9)",
+                      backdropFilter: "blur(8px)",
+                      border: "1px solid",
+                      borderColor: "divider",
+                    }}
+                  >
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        fontFamily: "'Space Grotesk', sans-serif",
+                        fontWeight: 600,
+                        color: "text.primary",
                       }}
                     >
                       {project.date}
                     </Typography>
+                  </Box>
+                </Box>
+
+                {/* Content */}
+                <Box
+                  sx={{
+                    p: { xs: 3, sm: 3.5 },
+                    display: "flex",
+                    flexDirection: "column",
+                    flexGrow: 1,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Box sx={{ mb: 2 }}>
+                    <Chip
+                      label={project.category}
+                      size="small"
+                      color="primary"
+                      variant="outlined"
+                      sx={{ borderRadius: "12px", fontWeight: 600, mb: 1.5 }}
+                    />
                     <Typography
-                      variant="body1"
-                      color="text.secondary"
+                      variant="h5"
+                      component="h3"
                       sx={{
-                        lineHeight: 1.8,
-                        fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
-                        mb: 3,
+                        fontWeight: 700,
+                        fontFamily: "'Space Grotesk', sans-serif",
+                        mb: 1.5,
+                        fontSize: { xs: "1.2rem", sm: "1.4rem" },
                       }}
+                    >
+                      {project.title}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="text.secondary"
+                      sx={{ lineHeight: 1.7, mb: 2.5 }}
                     >
                       {project.description}
                     </Typography>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        flexWrap: "wrap",
-                        gap: { xs: 1, sm: 1.5, md: 2 },
-                        mt: 3,
-                      }}
-                    >
+                  </Box>
+
+                  <Box sx={{ mt: "auto" }}>
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.8, mb: 2.5 }}>
                       {project.technologies.map((tech, idx) => (
-                        <Typography
+                        <Chip
                           key={idx}
-                          variant="body2"
+                          label={tech}
+                          size="small"
                           sx={{
-                            px: { xs: 1.5, sm: 2, md: 2.5 },
-                            py: { xs: 0.5, sm: 0.75, md: 1 },
-                            bgcolor: "background.default",
-                            borderRadius: 2,
-                            color: "primary.main",
+                            borderRadius: "10px",
+                            bgcolor:
+                              theme.palette.mode === "dark"
+                                ? "rgba(255, 255, 255, 0.05)"
+                                : "rgba(0, 0, 0, 0.04)",
                             fontWeight: 500,
-                            fontSize: {
-                              xs: "0.8rem",
-                              sm: "0.85rem",
-                              md: "0.95rem",
-                            },
+                            fontSize: "0.75rem",
                           }}
-                        >
-                          {tech}
-                        </Typography>
+                        />
                       ))}
                     </Box>
-                  </CardContent>
-                  <CardActions
-                    sx={{
-                      p: { xs: 3, sm: 4, md: 5 },
-                      pt: { xs: 2, sm: 2.5, md: 3 },
-                    }}
-                  >
+
                     <Button
-                      variant="contained"
+                      variant="outlined"
                       color="primary"
                       startIcon={<GitHubIcon />}
                       href={project.github}
                       target="_blank"
+                      rel="noopener noreferrer"
                       fullWidth
                       sx={{
-                        borderRadius: 2,
+                        borderRadius: "20px",
                         textTransform: "none",
-                        py: { xs: 1.5, md: 2 },
-                        fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
+                        fontWeight: 600,
+                        py: 1,
                       }}
                     >
-                      View on GitHub
+                      View GitHub
                     </Button>
-                  </CardActions>
-                </Paper>
-              </Box>
+                  </Box>
+                </Box>
+              </Paper>
             ))}
-          </Box>
-
-          {/* Pagination Dots */}
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              gap: { xs: 0.75, sm: 1 },
-              mt: { xs: 2, sm: 3, md: 4 },
-            }}
-          >
-            {projects.map((_, index) => (
-              <Box
-                key={index}
-                onClick={() => handleDotClick(index)}
-                sx={{
-                  width: { xs: 8, sm: 10, md: 12 },
-                  height: { xs: 8, sm: 10, md: 12 },
-                  borderRadius: "50%",
-                  bgcolor: currentIndex === index ? "primary.main" : "divider",
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  "&:hover": {
-                    transform: "scale(1.2)",
-                  },
-                }}
-              />
-            ))}
-          </Box>
+          </AnimatePresence>
         </Box>
       </Container>
     </Box>

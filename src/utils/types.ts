@@ -21,8 +21,8 @@ export interface Language {
 }
 // School logo URLs
 export const SCHOOL_LOGOS = {
-  UTAR: "https://upload.wikimedia.org/wikipedia/en/f/f1/Universiti_Tunku_Abdul_Rahman_Logo.jpg",
-  APU: "https://ican-elementor.s3.amazonaws.com/uploads/elementor/thumbs/apu-pugiabkejjjrb3k2wtckud15pgkxzudcyar2ax2oeo.png",
+  UTAR: "/Universiti_Tunku_Abdul_Rahman_Logo.jpg",
+  APU: "/APU-Logo_Final_Vertical_V1_HR1-copy-1024x966.png",
 } as const;
 
 // Add more global interfaces here as needed
