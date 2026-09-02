@@ -1,41 +1,44 @@
-import React, { useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import {
   Box,
-  Container,
   Typography,
   Paper,
   Button,
   Chip,
   useTheme,
   CardMedia,
-  Tabs,
-  Tab,
 } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+
+const CARD_WIDTH = 420;
+const CARD_GAP = 32;
 
 const Projects = () => {
   const theme = useTheme();
-  const [activeCategory, setActiveCategory] = useState("all");
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [translateX, setTranslateX] = useState(0);
+  // maxTranslate = how far the track must move so the last card's right
+  // edge aligns with the container's right edge (measured dynamically).
+  const [maxTranslate, setMaxTranslate] = useState(0);
 
   const projects = [
     {
       number: "01",
-      title: "Pet Care Mobile Application",
-      category: "Full-Stack & Mobile",
-      categoryKey: "mobile",
+      title: "Glove Buyer Intelligence GUI",
+      category: "Desktop App",
       description:
-        "Final Year Project: A mobile application built with React Native for pet care management, including booking services, pet health tracking, personal diary, and e-commerce marketplace integrated with FastAPI and MySQL backend.",
-      technologies: ["React Native", "React", "FastAPI", "MySQL", "Node.js", "Google Maps API"],
-      github: "https://github.com/yewzhihao3/PetPaw-React-Native",
-      image: "/images/PetPaw.png",
-      date: "2024–2025",
+        "A modern desktop application for managing international glove buyers and trade data analysis. Features HS code management, AI-powered buyer discovery via DeepSeek & Apollo APIs, comprehensive purchase history tracking, advanced analytics, and multi-format data export.",
+      technologies: ["Python", "CustomTkinter", "DeepSeek AI", "Apollo API", "Pandas", "Matplotlib", "SQLite", "PyInstaller"],
+      github: "https://github.com/yewzhihao3/Buyer_Intelligence_cli",
+      image: "/images/glove_buyer.png",
+      date: "2026",
     },
     {
       number: "02",
       title: "Email Complaints Automation System",
       category: "AI & Automation",
-      categoryKey: "automation",
       description:
         "A Python automation tool that extracts complaint details from emails, classifies root causes using OpenAI API, generates structured response suggestions, and provides analytics charts.",
       technologies: ["Python", "OpenAI API", "Pandas", "Matplotlib", "NumPy"],
@@ -45,9 +48,19 @@ const Projects = () => {
     },
     {
       number: "03",
+      title: "Pet Care Mobile Application",
+      category: "Full-Stack & Mobile",
+      description:
+        "Final Year Project: A mobile application built with React Native for pet care management, including booking services, pet health tracking, personal diary, and e-commerce marketplace integrated with FastAPI and MySQL backend.",
+      technologies: ["React Native", "React", "FastAPI", "MySQL", "Node.js", "Google Maps API"],
+      github: "https://github.com/yewzhihao3/PetPaw-React-Native",
+      image: "/images/PetPaw.png",
+      date: "2024–2025",
+    },
+    {
+      number: "04",
       title: "Bike Sales Analytics Dashboard",
       category: "Data Analytics",
-      categoryKey: "analytics",
       description:
         "A data analytics project focused on analyzing bike sales data. Includes interactive visualizations for customer demographics, regional sales trends, revenue metrics, and sales forecasting.",
       technologies: ["Python", "Pandas", "Matplotlib", "Data Visualization", "Jupyter"],
@@ -56,10 +69,9 @@ const Projects = () => {
       date: "2023",
     },
     {
-      number: "04",
+      number: "05",
       title: "Online Pharmacy Management System",
       category: "Full-Stack & Mobile",
-      categoryKey: "web",
       description:
         "A web-based pharmacy management system for tracking inventory, managing prescriptions, recording sales, and handling automated reordering alerts.",
       technologies: ["Python", "OOP", "SQL"],
@@ -68,10 +80,9 @@ const Projects = () => {
       date: "2023",
     },
     {
-      number: "05",
+      number: "06",
       title: "Electric Bill Calculator",
       category: "AI & Automation",
-      categoryKey: "automation",
       description:
         "A Python application for calculating monthly electric bill tariffs, tracking consumption history via CSV, and visualizing monthly usage trends.",
       technologies: ["Python", "Matplotlib", "CSV Data", "Data Visualization"],
@@ -80,10 +91,9 @@ const Projects = () => {
       date: "2022",
     },
     {
-      number: "06",
+      number: "07",
       title: "Python Banking System",
       category: "Full-Stack & Mobile",
-      categoryKey: "web",
       description:
         "An object-oriented banking application featuring account creation, fund deposits, withdrawals, transfers, and transaction history generation.",
       technologies: ["Python", "OOP", "File I/O"],
@@ -93,23 +103,97 @@ const Projects = () => {
     },
   ];
 
-  const filteredProjects =
-    activeCategory === "all"
-      ? projects
-      : projects.filter((p) => p.categoryKey === activeCategory);
+  const totalCards = projects.length;
+  // Full track width (all cards + all gaps between them)
+  const trackWidth = totalCards * CARD_WIDTH + (totalCards - 1) * CARD_GAP;
+
+  // Recalculate how far the track can scroll whenever the window resizes.
+  const recalcMax = useCallback(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const style = window.getComputedStyle(container);
+    const pl = parseFloat(style.paddingLeft) || 0;
+    const pr = parseFloat(style.paddingRight) || 0;
+    // The track starts at `pl` pixels from the container's left edge.
+    // We want to stop when the last card's right edge is at
+    //   (clientWidth - pr - EXTRA) from the container's left.
+    // => maxTranslate = pl + trackWidth - (clientWidth - pr - EXTRA)
+    //                 = trackWidth + pl + pr + EXTRA - clientWidth
+    const EXTRA = 32; // extra breathing room on the right (px)
+    const newMax = Math.max(0, trackWidth + pl + pr + EXTRA - container.clientWidth);
+    setMaxTranslate(newMax);
+  }, [trackWidth]);
+
+  useEffect(() => {
+    recalcMax();
+    window.addEventListener("resize", recalcMax);
+    return () => window.removeEventListener("resize", recalcMax);
+  }, [recalcMax]);
+
+  // Scroll → translateX mapping
+  useEffect(() => {
+    const getSectionTop = () => {
+      const section = sectionRef.current;
+      if (!section) return 0;
+      return section.getBoundingClientRect().top + window.scrollY;
+    };
+
+    const handleScroll = () => {
+      const section = sectionRef.current;
+      if (!section) return;
+      const sectionTop = getSectionTop();
+      const progress = window.scrollY - sectionTop;
+
+      if (progress < 0) {
+        setTranslateX(0);
+      } else if (progress > maxTranslate) {
+        setTranslateX(maxTranslate);
+      } else {
+        setTranslateX(progress);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    const raf = requestAnimationFrame(handleScroll);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [maxTranslate]);
 
   return (
     <Box
+      ref={sectionRef}
       component="section"
       id="projects"
       sx={{
-        py: { xs: 8, md: 12 },
-        bgcolor: "background.default",
+        height: `calc(100vh + ${maxTranslate}px)`,
+        position: "relative",
       }}
     >
-      <Container maxWidth="lg">
-        {/* Section Header */}
-        <Box sx={{ textAlign: "center", mb: { xs: 5, md: 7 } }}>
+      {/* Sticky viewport */}
+      <Box
+        sx={{
+          position: "sticky",
+          top: 0,
+          height: "100vh",
+          overflow: "hidden",
+          bgcolor: "background.default",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        {/* Header */}
+        <Box
+          sx={{
+            textAlign: "center",
+            pt: { xs: 6, md: 7 },
+            pb: { xs: 2, md: 3 },
+            flexShrink: 0,
+          }}
+        >
           <Typography
             variant="h2"
             component="h2"
@@ -132,58 +216,47 @@ const Projects = () => {
               mt: 1.5,
             }}
           />
-        </Box>
-
-        {/* Category Tabs */}
-        <Box sx={{ display: "flex", justifyContent: "center", mb: 5 }}>
-          <Tabs
-            value={activeCategory}
-            onChange={(_, newValue) => setActiveCategory(newValue)}
-            variant="scrollable"
-            scrollButtons="auto"
-            sx={{
-              bgcolor: "background.paper",
-              borderRadius: "30px",
-              p: 0.5,
-              border: "1px solid",
-              borderColor: "divider",
-              "& .MuiTabs-indicator": {
-                bgcolor: "primary.main",
-                height: "100%",
-                borderRadius: "25px",
-                opacity: 0.15,
-              },
-            }}
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ mt: 1.5, opacity: 0.6, fontStyle: "italic" }}
           >
-            <Tab label="All Projects" value="all" sx={{ fontWeight: 600, px: 2.5, textTransform: "none" }} />
-            <Tab label="Full-Stack & Mobile" value="mobile" sx={{ fontWeight: 600, px: 2.5, textTransform: "none" }} />
-            <Tab label="AI & Automation" value="automation" sx={{ fontWeight: 600, px: 2.5, textTransform: "none" }} />
-            <Tab label="Data Analytics" value="analytics" sx={{ fontWeight: 600, px: 2.5, textTransform: "none" }} />
-          </Tabs>
+            Scroll down to explore →
+          </Typography>
         </Box>
 
-        {/* Projects Grid */}
+        {/* Horizontal scroll track */}
         <Box
+          ref={containerRef}
           sx={{
-            display: "grid",
-            gridTemplateColumns: { xs: "1fr", md: "repeat(2, 1fr)" },
-            gap: 4,
+            flex: 1,
+            display: "flex",
+            alignItems: "center",
+            overflow: "hidden",
+            px: { xs: 3, md: 6 },
           }}
         >
-          <AnimatePresence>
-            {filteredProjects.map((project) => (
+          <Box
+            sx={{
+              display: "flex",
+              gap: `${CARD_GAP}px`,
+              transform: `translateX(-${translateX}px)`,
+              willChange: "transform",
+              transition: "transform 0.05s linear",
+            }}
+          >
+            {projects.map((project, idx) => (
               <Paper
                 key={project.number}
                 elevation={0}
                 component={motion.div}
-                layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.4 }}
-                whileHover={{ y: -4 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: idx * 0.08 }}
+                whileHover={{ y: -6 }}
                 sx={{
-                  height: "100%",
+                  width: `${CARD_WIDTH}px`,
+                  minWidth: `${CARD_WIDTH}px`,
                   display: "flex",
                   flexDirection: "column",
                   borderRadius: 4,
@@ -191,10 +264,15 @@ const Projects = () => {
                   border: "1px solid",
                   borderColor: "divider",
                   overflow: "hidden",
-                  transition: "all 0.3s ease",
+                  flexShrink: 0,
                   "&:hover": {
                     borderColor: "primary.main",
+                    boxShadow:
+                      theme.palette.mode === "dark"
+                        ? "0 8px 32px rgba(124,58,237,0.15)"
+                        : "0 8px 32px rgba(124,58,237,0.12)",
                   },
+                  transition: "border-color 0.3s ease, box-shadow 0.3s ease",
                 }}
               >
                 {/* Image */}
@@ -204,12 +282,13 @@ const Projects = () => {
                     image={project.image}
                     alt={project.title}
                     sx={{
-                      height: { xs: "200px", sm: "240px" },
+                      height: "200px",
                       objectFit: "cover",
                       bgcolor: "background.default",
+                      transition: "transform 0.4s ease",
+                      "&:hover": { transform: "scale(1.04)" },
                     }}
                   />
-
                   {/* Number Badge */}
                   <Box
                     sx={{
@@ -239,7 +318,6 @@ const Projects = () => {
                       {project.number}
                     </Typography>
                   </Box>
-
                   {/* Date Badge */}
                   <Box
                     sx={{
@@ -274,7 +352,7 @@ const Projects = () => {
                 {/* Content */}
                 <Box
                   sx={{
-                    p: { xs: 3, sm: 3.5 },
+                    p: 3,
                     display: "flex",
                     flexDirection: "column",
                     flexGrow: 1,
@@ -295,8 +373,9 @@ const Projects = () => {
                       sx={{
                         fontWeight: 700,
                         fontFamily: "'Space Grotesk', sans-serif",
-                        mb: 1.5,
-                        fontSize: { xs: "1.2rem", sm: "1.4rem" },
+                        mb: 1,
+                        fontSize: "1.15rem",
+                        lineHeight: 1.3,
                       }}
                     >
                       {project.title}
@@ -304,17 +383,23 @@ const Projects = () => {
                     <Typography
                       variant="body2"
                       color="text.secondary"
-                      sx={{ lineHeight: 1.7, mb: 2.5 }}
+                      sx={{
+                        lineHeight: 1.65,
+                        display: "-webkit-box",
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                      }}
                     >
                       {project.description}
                     </Typography>
                   </Box>
 
                   <Box sx={{ mt: "auto" }}>
-                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.8, mb: 2.5 }}>
-                      {project.technologies.map((tech, idx) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.7, mb: 2 }}>
+                      {project.technologies.slice(0, 5).map((tech, i) => (
                         <Chip
-                          key={idx}
+                          key={i}
                           label={tech}
                           size="small"
                           sx={{
@@ -324,10 +409,23 @@ const Projects = () => {
                                 ? "rgba(255, 255, 255, 0.05)"
                                 : "rgba(0, 0, 0, 0.04)",
                             fontWeight: 500,
-                            fontSize: "0.75rem",
+                            fontSize: "0.72rem",
                           }}
                         />
                       ))}
+                      {project.technologies.length > 5 && (
+                        <Chip
+                          label={`+${project.technologies.length - 5}`}
+                          size="small"
+                          sx={{
+                            borderRadius: "10px",
+                            bgcolor: "primary.main",
+                            color: "#fff",
+                            fontWeight: 600,
+                            fontSize: "0.72rem",
+                          }}
+                        />
+                      )}
                     </Box>
 
                     <Button
@@ -342,7 +440,7 @@ const Projects = () => {
                         borderRadius: "20px",
                         textTransform: "none",
                         fontWeight: 600,
-                        py: 1,
+                        py: 0.9,
                       }}
                     >
                       View GitHub
@@ -351,9 +449,44 @@ const Projects = () => {
                 </Box>
               </Paper>
             ))}
-          </AnimatePresence>
+          </Box>
         </Box>
-      </Container>
+
+        {/* Progress dot indicators */}
+        <Box
+          sx={{
+            position: "absolute",
+            bottom: 24,
+            left: "50%",
+            transform: "translateX(-50%)",
+            display: "flex",
+            gap: 1,
+            alignItems: "center",
+          }}
+        >
+          {projects.map((_, i) => {
+            const cardProgress = (CARD_WIDTH + CARD_GAP) * i;
+            const halfStep = (CARD_WIDTH + CARD_GAP) / 2;
+            const isActive = translateX >= cardProgress - halfStep;
+            const isCurrent =
+              translateX >= cardProgress - halfStep &&
+              (i === projects.length - 1 || translateX < cardProgress + halfStep);
+            return (
+              <Box
+                key={i}
+                sx={{
+                  width: isCurrent ? 20 : 6,
+                  height: 6,
+                  borderRadius: "3px",
+                  bgcolor: isActive ? "primary.main" : "divider",
+                  transition: "all 0.3s ease",
+                  opacity: isActive ? 1 : 0.4,
+                }}
+              />
+            );
+          })}
+        </Box>
+      </Box>
     </Box>
   );
 };
