@@ -55,10 +55,10 @@ const Contact = () => {
     {
       icon: <LocationOnIcon color="primary" fontSize="large" />,
       title: "Location",
-      value: "Taiping, Perak / Penang, Malaysia",
+      value: "Taiping, Perak Malaysia",
       actionLabel: "Copy Location",
       onAction: () =>
-        handleCopy("Taiping, Perak / Penang, Malaysia", "Location"),
+        handleCopy("Taiping, Perak Malaysia", "Location"),
     },
   ];
 
