@@ -31,7 +31,7 @@ const Projects = () => {
       description:
         "A modern desktop application for managing international glove buyers and trade data analysis. Features HS code management, AI-powered buyer discovery via DeepSeek & Apollo APIs, comprehensive purchase history tracking, advanced analytics, and multi-format data export.",
       technologies: ["Python", "CustomTkinter", "DeepSeek AI", "Apollo API", "Pandas", "Matplotlib", "SQLite", "PyInstaller"],
-      github: "https://github.com/yewzhihao3/Buyer_Intelligence_cli",
+      github: "https://github.com/yewzhihao3/glove_trade_system",
       image: "/images/glove_buyer.png",
       date: "2026",
     },
