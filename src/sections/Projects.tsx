@@ -82,9 +82,9 @@ const Projects = () => {
     {
       number: "06",
       title: "Online Pharmacy Management System",
-      category: "Full-Stack & Mobile",
+      category: "Side Project",
       description:
-        "A web-based pharmacy management system for tracking inventory, managing prescriptions, recording sales, and handling automated reordering alerts.",
+        "A console-based Python pharmacy management program for tracking inventory, managing prescriptions, recording sales, and handling automated reordering alerts.",
       technologies: ["Python", "OOP", "SQL"],
       github: "https://github.com/yewzhihao3/Side-Projects",
       image: "/images/pharmacy.jpg",
@@ -93,7 +93,7 @@ const Projects = () => {
     {
       number: "07",
       title: "Electric Bill Calculator",
-      category: "AI & Automation",
+      category: "Side Project",
       description:
         "A Python application for calculating monthly electric bill tariffs, tracking consumption history via CSV, and visualizing monthly usage trends.",
       technologies: ["Python", "Matplotlib", "CSV Data", "Data Visualization"],
@@ -104,7 +104,7 @@ const Projects = () => {
     {
       number: "08",
       title: "Python Banking System",
-      category: "Full-Stack & Mobile",
+      category: "Side Project",
       description:
         "An object-oriented banking application featuring account creation, fund deposits, withdrawals, transfers, and transaction history generation.",
       technologies: ["Python", "OOP", "File I/O"],
