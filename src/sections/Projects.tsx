@@ -32,7 +32,7 @@ const Projects = () => {
         "A business data ingestion platform that turns messy Excel workbooks, PDFs, and receipt images into standardized, searchable records. Features deterministic structure detection, reusable templates, batch import, AI Vision/OCR receipt extraction, multi-tenant workspaces with role-based access, analytics, and CSV/XLSX export.",
       technologies: ["Vue 3", "TypeScript", "FastAPI", "SQLAlchemy", "PostgreSQL", "Docker", "DeepSeek Vision", "Alembic"],
       github: "https://github.com/yewzhihao3/DataBridge",
-      image: "/images/databridge.jpg",
+      image: "",
       date: "2026",
     },
     {
@@ -288,6 +288,7 @@ const Projects = () => {
               >
                 {/* Image */}
                 <Box sx={{ position: "relative", overflow: "hidden" }}>
+                  {project.image ? (
                   <CardMedia
                     component="img"
                     image={project.image}
@@ -300,6 +301,14 @@ const Projects = () => {
                       "&:hover": { transform: "scale(1.04)" },
                     }}
                   />
+                  ) : (
+                    <Box
+                      sx={{
+                        height: "200px",
+                        bgcolor: "background.default",
+                      }}
+                    />
+                  )}
                   {/* Number Badge */}
                   <Box
                     sx={{
