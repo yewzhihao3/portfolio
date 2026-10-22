@@ -84,7 +84,7 @@ const Projects = () => {
       title: "Online Pharmacy Management System",
       category: "Python Project",
       description:
-        "A console-based Python pharmacy management program for tracking inventory, managing prescriptions, recording sales, and handling automated reordering alerts.",
+        "An Online Pharmacy Management System for tracking inventory, managing prescriptions, recording sales, and handling automated reordering alerts.",
       technologies: ["Python", "OOP", "SQL"],
       github: "https://github.com/yewzhihao3/Side-Projects",
       image: "/images/pharmacy.jpg",
