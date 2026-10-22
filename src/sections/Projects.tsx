@@ -32,7 +32,7 @@ const Projects = () => {
         "A business data ingestion platform that turns messy Excel workbooks, PDFs, and receipt images into standardized, searchable records. Features deterministic structure detection, reusable templates, batch import, AI Vision/OCR receipt extraction, multi-tenant workspaces with role-based access, analytics, and CSV/XLSX export.",
       technologies: ["Vue 3", "TypeScript", "FastAPI", "SQLAlchemy", "PostgreSQL", "Docker", "DeepSeek Vision", "Alembic"],
       github: "https://github.com/yewzhihao3/DataBridge",
-      image: "",
+      image: "/images/Databridge.png",
       date: "2026",
     },
     {
@@ -87,7 +87,7 @@ const Projects = () => {
         "An Online Pharmacy Management System for tracking inventory, managing prescriptions, recording sales, and handling automated reordering alerts.",
       technologies: ["Python", "OOP", "SQL"],
       github: "https://github.com/yewzhihao3/Side-Projects",
-      image: "/images/pharmacy.jpg",
+      image: "/images/pharmacy.png",
       date: "2023",
     },
     {
@@ -98,7 +98,7 @@ const Projects = () => {
         "A Python application for calculating monthly electric bill tariffs, tracking consumption history via CSV, and visualizing monthly usage trends.",
       technologies: ["Python", "Matplotlib", "CSV Data", "Data Visualization"],
       github: "https://github.com/yewzhihao3/Side-Projects",
-      image: "/images/eleteric.webp",
+      image: "/images/electric.png",
       date: "2022",
     },
     {
@@ -109,7 +109,7 @@ const Projects = () => {
         "An object-oriented banking application featuring account creation, fund deposits, withdrawals, transfers, and transaction history generation.",
       technologies: ["Python", "OOP", "File I/O"],
       github: "https://github.com/yewzhihao3/Side-Projects",
-      image: "/images/bank.jpg",
+      image: "/images/bank.png",
       date: "2022",
     },
   ];
