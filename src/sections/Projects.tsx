@@ -82,7 +82,7 @@ const Projects = () => {
     {
       number: "06",
       title: "Online Pharmacy Management System",
-      category: "Side Project",
+      category: "Python Project",
       description:
         "A console-based Python pharmacy management program for tracking inventory, managing prescriptions, recording sales, and handling automated reordering alerts.",
       technologies: ["Python", "OOP", "SQL"],
@@ -93,7 +93,7 @@ const Projects = () => {
     {
       number: "07",
       title: "Electric Bill Calculator",
-      category: "Side Project",
+      category: "Python Project",
       description:
         "A Python application for calculating monthly electric bill tariffs, tracking consumption history via CSV, and visualizing monthly usage trends.",
       technologies: ["Python", "Matplotlib", "CSV Data", "Data Visualization"],
@@ -104,7 +104,7 @@ const Projects = () => {
     {
       number: "08",
       title: "Python Banking System",
-      category: "Side Project",
+      category: "Python Project",
       description:
         "An object-oriented banking application featuring account creation, fund deposits, withdrawals, transfers, and transaction history generation.",
       technologies: ["Python", "OOP", "File I/O"],
