@@ -26,6 +26,17 @@ const Projects = () => {
   const projects = [
     {
       number: "01",
+      title: "DataBridge",
+      category: "Full-Stack & Data",
+      description:
+        "A business data ingestion platform that turns messy Excel workbooks, PDFs, and receipt images into standardized, searchable records. Features deterministic structure detection, reusable templates, batch import, AI Vision/OCR receipt extraction, multi-tenant workspaces with role-based access, analytics, and CSV/XLSX export.",
+      technologies: ["Vue 3", "TypeScript", "FastAPI", "SQLAlchemy", "PostgreSQL", "Docker", "DeepSeek Vision", "Alembic"],
+      github: "https://github.com/yewzhihao3/DataBridge",
+      image: "/images/databridge.jpg",
+      date: "2026",
+    },
+    {
+      number: "02",
       title: "Glove Buyer Intelligence GUI",
       category: "Desktop App",
       description:
@@ -36,7 +47,7 @@ const Projects = () => {
       date: "2026",
     },
     {
-      number: "02",
+      number: "03",
       title: "Email Complaints Automation System",
       category: "AI & Automation",
       description:
@@ -47,7 +58,7 @@ const Projects = () => {
       date: "2025",
     },
     {
-      number: "03",
+      number: "04",
       title: "Pet Care Mobile Application",
       category: "Full-Stack & Mobile",
       description:
@@ -58,7 +69,7 @@ const Projects = () => {
       date: "2024–2025",
     },
     {
-      number: "04",
+      number: "05",
       title: "Bike Sales Analytics Dashboard",
       category: "Data Analytics",
       description:
@@ -69,7 +80,7 @@ const Projects = () => {
       date: "2023",
     },
     {
-      number: "05",
+      number: "06",
       title: "Online Pharmacy Management System",
       category: "Full-Stack & Mobile",
       description:
@@ -80,7 +91,7 @@ const Projects = () => {
       date: "2023",
     },
     {
-      number: "06",
+      number: "07",
       title: "Electric Bill Calculator",
       category: "AI & Automation",
       description:
@@ -91,7 +102,7 @@ const Projects = () => {
       date: "2022",
     },
     {
-      number: "07",
+      number: "08",
       title: "Python Banking System",
       category: "Full-Stack & Mobile",
       description:
